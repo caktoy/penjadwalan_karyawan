@@ -1,42 +1,42 @@
 <?php
 
 class M_Kota extends CI_Model {
-    
+
     function __construct() {
         parent::__construct();
     }
-    
+
     public function get_all()
     {
-        $this->db->select("kota.*, provinsi.NAMA_PROVINSI, provinsi.STATUS as STATUS_PROVINSI");
+        $this->db->select("kota.*, provinsi.nama_provinsi, provinsi.status as status_provinsi");
         $this->db->from("kota");
-        $this->db->join("provinsi", "kota.ID_PROVINSI = provinsi.ID_PROVINSI", "left");
+        $this->db->join("provinsi", "kota.id_provinsi = provinsi.id_provinsi", "left");
         return $this->db->get()->result();
     }
 
     public function get_id($id)
     {
-        $this->db->select("kota.*, provinsi.NAMA_PROVINSI, provinsi.STATUS as STATUS_PROVINSI");
+        $this->db->select("kota.*, provinsi.nama_provinsi, provinsi.status as status_provinsi");
         $this->db->from("kota");
-        $this->db->join("provinsi", "kota.ID_PROVINSI = provinsi.ID_PROVINSI", "left");
+        $this->db->join("provinsi", "kota.id_provinsi = provinsi.id_provinsi", "left");
         $this->db->where("id_kota", $id);
         return $this->db->get()->result();
     }
-    
+
     public function get_where(array $cond)
     {
-        $this->db->select("kota.*, provinsi.NAMA_PROVINSI, provinsi.STATUS as STATUS_PROVINSI");
+        $this->db->select("kota.*, provinsi.nama_provinsi, provinsi.status as status_provinsi");
         $this->db->from("kota");
-        $this->db->join("provinsi", "kota.ID_PROVINSI = provinsi.ID_PROVINSI", "left");
+        $this->db->join("provinsi", "kota.id_provinsi = provinsi.id_provinsi", "left");
         $this->db->where($cond);
         return $this->db->get()->result();
     }
-    
+
     public function get_provinsi($prov) {
-        $this->db->select("kota.*, provinsi.NAMA_PROVINSI, provinsi.STATUS as STATUS_PROVINSI");
+        $this->db->select("kota.*, provinsi.nama_provinsi, provinsi.status as status_provinsi");
         $this->db->from("kota");
-        $this->db->join("provinsi", "kota.ID_PROVINSI = provinsi.ID_PROVINSI", "left");
-        $this->db->where("id_provinsi", $id);
+        $this->db->join("provinsi", "kota.id_provinsi = provinsi.id_provinsi", "left");
+        $this->db->where("kota.id_provinsi", $prov);
         return $this->db->get()->result();
     }
 
@@ -65,18 +65,20 @@ class M_Kota extends CI_Model {
         $this->db->where('id_kota', $id);
         return $this->db->update('kota', array('status' => 'N'));
     }
-    
+
     public function activate($id)
     {
         $this->db->where('id_kota', $id);
         return $this->db->update('kota', array('status' => 'Y'));
     }
-    
-    public function genId() 
+
+    public function genId()
     {
-        $this->db->select("ifnull(max(right(id_kota, 3)), 0) + 1 as ID");
+        $this->db->select("max(right(id_kota, 3)) as id");
         $this->db->from("kota");
-        $counter = '000'.$this->db->get()->result()[0]->ID;
+        $id = $this->db->get()->result()[0]->id;
+        $id = $id==null?1:($id+1);
+        $counter = '000'.$id;
         return 'K'.substr($counter, strlen($counter) - 3, 3);
     }
 }

@@ -1,41 +1,41 @@
 <?php
 
 class M_Site extends CI_Model {
-    
+
     function __construct() {
         parent::__construct();
     }
-    
+
     public function get_all()
     {
-        $this->db->select("site.*, kota.NAMA_KOTA");
+        $this->db->select("site.*, kota.nama_kota");
         $this->db->from("site");
-        $this->db->join("kota", "site.ID_KOTA = kota.ID_KOTA", "left");
+        $this->db->join("kota", "site.id_kota = kota.id_kota", "left");
         return $this->db->get()->result();
     }
 
     public function get_id($id)
     {
-        $this->db->select("site.*, kota.NAMA_KOTA");
+        $this->db->select("site.*, kota.nama_kota");
         $this->db->from("site");
-        $this->db->join("kota", "site.ID_KOTA = kota.ID_KOTA", "left");
+        $this->db->join("kota", "site.id_kota = kota.id_kota", "left");
         $this->db->where("id_site", $id);
         return $this->db->get()->result();
     }
-    
+
     public function get_kota($kota) {
-        $this->db->select("site.*, kota.NAMA_KOTA");
+        $this->db->select("site.*, kota.nama_kota");
         $this->db->from("site");
-        $this->db->join("kota", "site.ID_KOTA = kota.ID_KOTA", "left");
+        $this->db->join("kota", "site.id_kota = kota.id_kota", "left");
         $this->db->where("id_kota", $kota);
         return $this->db->get()->result();
     }
-    
+
     public function get_where(array $cond)
     {
-        $this->db->select("site.*, kota.NAMA_KOTA");
+        $this->db->select("site.*, kota.nama_kota");
         $this->db->from("site");
-        $this->db->join("kota", "site.ID_KOTA = kota.ID_KOTA", "left");
+        $this->db->join("kota", "site.id_kota = kota.id_kota", "left");
         $this->db->where($cond);
         return $this->db->get()->result();
     }
@@ -69,18 +69,20 @@ class M_Site extends CI_Model {
         $this->db->where('id_site', $id);
         return $this->db->update('site', array('status' => 'N'));
     }
-    
+
     public function activate($id)
     {
         $this->db->where('id_site', $id);
         return $this->db->update('site', array('status' => 'Y'));
     }
-    
-    public function genId() 
+
+    public function genId()
     {
-        $this->db->select("ifnull(max(right(id_site, 3)), 0) + 1 as ID");
+        $this->db->select("max(right(id_site, 3)) as id");
         $this->db->from("site");
-        $counter = '000'.$this->db->get()->result()[0]->ID;
+        $id = $this->db->get()->result()[0]->id;
+        $id = $id==null?1:($id+1);
+        $counter = '000'.$id;
         return 'S'.substr($counter, strlen($counter) - 3, 3);
     }
 }

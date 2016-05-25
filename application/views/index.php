@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>Penjadwalan Karyawan - <?php echo $judul; ?></title>
+		<title>Penjadwalan Teknisi - <?php echo $judul; ?></title>
 
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -84,10 +84,10 @@
 				</button>
 
 				<div class="navbar-header pull-left">
-					<a href="index.html" class="navbar-brand">
+					<a href="<?php echo base_url(); ?>" class="navbar-brand">
 						<small>
 							<i class="fa fa-users"></i>
-							Penjadwalan Karyawan
+							Penjadwalan Teknisi
 						</small>
 					</a>
 				</div>
@@ -125,7 +125,7 @@
 				<div class="footer-inner">
 					<div class="footer-content">
 						<span class="bigger-120">
-							<span class="blue bolder">Penjadwalan Karyawan</span>
+							<span class="blue bolder">Penjadwalan Teknisi</span>
 							&copy; 2016
 						</span>
 					</div>

@@ -56,7 +56,7 @@
             </li>
 
             <li class="<?php echo $aktif=='penjadwalan'?'active':''; ?>">
-                    <a href="#">
+                    <a href="<?php echo base_url(); ?>index.php/penjadwalan">
                             <i class="menu-icon fa fa-calendar"></i>
                             <span class="menu-text"> Penjadwalan </span>
                     </a>
@@ -65,7 +65,7 @@
             </li>
 
             <li class="<?php echo $aktif=='presensi'?'active':''; ?>">
-                    <a href="#">
+                    <a href="<?php echo base_url(); ?>index.php/presensi">
                             <i class="menu-icon fa fa-check-square-o"></i>
                             <span class="menu-text"> Presensi </span>
                     </a>
@@ -87,7 +87,7 @@
 
                     <ul class="submenu">
                             <li class="">
-                                    <a href="#">
+                                    <a href="<?php echo base_url(); ?>index.php/laporan/presensi">
                                             <i class="menu-icon fa fa-caret-right"></i>
                                             Laporan Presensi
                                     </a>
@@ -96,7 +96,7 @@
                             </li>
 
                             <li class="">
-                                    <a href="#">
+                                    <a href="<?php echo base_url(); ?>index.php/laporan/detil">
                                             <i class="menu-icon fa fa-caret-right"></i>
                                             Laporan Detil Presensi
                                     </a>

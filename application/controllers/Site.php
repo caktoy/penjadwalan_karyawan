@@ -45,7 +45,7 @@ class Site extends CI_Controller {
     }
     
     public function activate($id) {
-        $check = $this->tbl_site->get_id($id)[0]->STATUS;
+        $check = $this->tbl_site->get_id($id)[0]->status;
         if($check == "Y") {
             $act = $this->tbl_site->deactivate($id);
             

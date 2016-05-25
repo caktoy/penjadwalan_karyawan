@@ -49,7 +49,7 @@ class Teknisi extends CI_Controller {
     }
     
     public function activate($id) {
-        $check = $this->tbl_teknisi->get_id($id)[0]->STATUS;
+        $check = $this->tbl_teknisi->get_id($id)[0]->status;
         if($check == "Y") {
             $act = $this->tbl_teknisi->deactivate($id);
             

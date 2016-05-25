@@ -19,9 +19,17 @@ class Kota extends CI_Controller {
         $id = $this->input->post('id');
         $kota = $this->tbl_kota->get_id($id);
         if(count($kota) > 0)
-            echo $kota[0]->NAMA_PROVINSI;
+            echo $kota[0]->nama_provinsi;
         else 
             echo null;
+    }
+
+    public function provinsi()
+    {
+        $prov = $this->input->post('provinsi');
+        $provinsi = $this->tbl_kota->get_provinsi($prov);
+        header("Content-Type: application/json");
+        echo json_encode($provinsi);
     }
     
     public function tambah_provinsi() {
@@ -44,8 +52,8 @@ class Kota extends CI_Controller {
         $nama_kota = $this->input->post('nama_kota');
         $status = 'Y';
         
-        $check = $this->tbl_kota->get_id($id);
-        if($check > 0)
+        $check = $this->tbl_kota->get_id($id_kota);
+        if(count($check) > 0)
             $act = $this->tbl_kota->edit($id_kota, $id_provinsi, $nama_kota, $status);
         else
             $act = $this->tbl_kota->add($id_kota, $id_provinsi, $nama_kota, $status);
@@ -59,7 +67,7 @@ class Kota extends CI_Controller {
     }
     
     public function activate_kota($id) {
-        $check = $this->tbl_kota->get_id($id)[0]->STATUS;
+        $check = $this->tbl_kota->get_id($id)[0]->status;
         if($check == "Y") {
             $act = $this->tbl_kota->deactivate($id);
             
@@ -79,7 +87,7 @@ class Kota extends CI_Controller {
     }
     
     public function activate_provinsi($id) {
-        $check = $this->tbl_provinsi->get_id($id)[0]->STATUS;
+        $check = $this->tbl_provinsi->get_id($id)[0]->status;
         if($check == "Y") {
             $act = $this->tbl_provinsi->deactivate($id);
             

@@ -64,7 +64,7 @@
                                         <div class="col-sm-9">
                                             <select id="tmp_lahir" name="tmp_lahir" class="col-xs-10 col-sm-5 form-control">
                                                 <?php foreach($kota as $k) { ?>
-                                                <option value="<?php echo $k->ID_KOTA ?>"><?php echo $k->NAMA_KOTA ?></option>
+                                                <option value="<?php echo $k->id_kota ?>"><?php echo $k->nama_kota ?></option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -146,22 +146,22 @@
                                 <tbody>
                                     <?php foreach ($teknisi as $t) { ?>
                                     <tr>
-                                        <td><?php echo $t->ID_TEKNISI; ?></td>
-                                        <td><?php echo $t->NAMA_TEKNISI; ?></td>
-                                        <td><?php echo $t->ALAMAT_TEKNISI; ?></td>
-                                        <td><?php echo $t->NO_TELP_TEKNISI; ?></td>
-                                        <td><?php echo $t->JENIS_KELAMIN_TEKNISI; ?></td>
-                                        <td><?php echo $t->NAMA_KOTA . ', ' . date('d-m-Y', strtotime($t->TANGGAL_LAHIR_TEKNISI)); ?></td>
-                                        <td><?php echo $t->AGAMA_TEKNISI; ?></td>
-                                        <td><?php echo $t->EMAIL_TEKNISI; ?></td>
-                                        <td><?php echo $t->STATUS=="Y"?"Aktif":"Non-Aktiv"; ?></td>
+                                        <td><?php echo $t->id_teknisi; ?></td>
+                                        <td><?php echo $t->nama_teknisi; ?></td>
+                                        <td><?php echo $t->alamat_teknisi; ?></td>
+                                        <td><?php echo $t->no_telp_teknisi; ?></td>
+                                        <td><?php echo $t->jenis_kelamin_teknisi; ?></td>
+                                        <td><?php echo $t->nama_kota . ', ' . date('d-m-Y', strtotime($t->tanggal_lahir_teknisi)); ?></td>
+                                        <td><?php echo $t->agama_teknisi; ?></td>
+                                        <td><?php echo $t->email_teknisi ?></td>
+                                        <td><?php echo $t->status=="Y"?"Aktif":"Non-Aktiv"; ?></td>
                                         <td style="text-align: center;">
                                             <div class="hidden-sm hidden-xs action-buttons">
-                                                <a class="green" href="javascript:void(0);" onclick="edit('<?php echo $t->ID_TEKNISI; ?>')">
+                                                <a class="green" href="javascript:void(0);" onclick="edit('<?php echo $t->id_teknisi; ?>')">
                                                     <i class="ace-icon fa fa-pencil bigger-130"></i>
                                                 </a>
-                                                <a href="<?php echo base_url().'index.php/teknisi/activate/'.$t->ID_TEKNISI; ?>" onclick="return confirm('Anda yakin?');">
-                                                    <?php if($t->STATUS == "Y") { ?>
+                                                <a href="<?php echo base_url().'index.php/teknisi/activate/'.$t->id_teknisi; ?>" onclick="return confirm('Anda yakin?');">
+                                                    <?php if($t->status == "Y") { ?>
                                                     <i class="ace-icon fa fa-remove bigger-130 red"></i>
                                                     <?php } else { ?>
                                                     <i class="ace-icon fa fa-undo bigger-130 orange"></i>
@@ -180,20 +180,21 @@
 <script>
     function edit(id) {
         $.ajax({
-            url: '<?php echo base_url().'index.php/teknisi/detil' ?>';
+            url: '<?php echo base_url().'index.php/teknisi/detil'; ?>',
             dataType: 'json',
             type: 'post',
             data: {'id': id},
             success: function(result) {
                 var teknisi = result[0];
-                $("#id").val(teknisi.ID_TEKNISI);
-                $("#nama").val(teknisi.NAMA_TEKNISI);
-                $("#alamat").val(teknisi.ALAMAT_TEKNISI);
-                $("#telp").val(teknisi.NO_TELP_TEKNISI);
-                $("#jk").val(teknisi.JENIS_KELAMIN_TEKNISI);
-                $("#tmp_lahir").val(teknisi.ID_KOTA);
-                $("#agama").val(teknisi.AGAMA_TEKNISI);
-                $("#email").val(teknisi.EMAIL_TEKNISI);
+                $("#id").val(teknisi.id_teknisi);
+                $("#nama").val(teknisi.nama_teknisi);
+                $("#alamat").val(teknisi.alamat_teknisi);
+                $("#telp").val(teknisi.no_telp_teknisi);
+                $("#jk").val(teknisi.jenis_kelamin_teknisi);
+                $("#tmp_lahir").val(teknisi.id_kota);
+                $("#tgl_lahir").val(teknisi.tanggal_lahir_teknisi);
+                $("#agama").val(teknisi.agama_teknisi);
+                $("#email").val(teknisi.email_teknisi);
             },
             error: function(xhr, status, error) {
                 console.log(error);

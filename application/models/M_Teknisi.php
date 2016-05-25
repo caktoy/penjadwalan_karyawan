@@ -1,41 +1,41 @@
 <?php
 
 class M_Teknisi extends CI_Model {
-    
+
     function __construct() {
         parent::__construct();
     }
-    
+
     public function get_all()
     {
-        $this->db->select("teknisi.*, kota.NAMA_KOTA");
+        $this->db->select("teknisi.*, kota.nama_kota");
         $this->db->from("teknisi");
-        $this->db->join("kota", "teknisi.ID_KOTA = kota.ID_KOTA", "left");
+        $this->db->join("kota", "teknisi.id_kota = kota.id_kota", "left");
         return $this->db->get()->result();
     }
 
     public function get_id($id)
     {
-        $this->db->select("teknisi.*, kota.NAMA_KOTA");
+        $this->db->select("teknisi.*, kota.nama_kota");
         $this->db->from("teknisi");
-        $this->db->join("kota", "teknisi.ID_KOTA = kota.ID_KOTA", "left");
+        $this->db->join("kota", "teknisi.id_kota = kota.id_kota", "left");
         $this->db->where("id_teknisi", $id);
         return $this->db->get()->result();
     }
-    
+
     public function get_kota($kota) {
-        $this->db->select("teknisi.*, kota.NAMA_KOTA");
+        $this->db->select("teknisi.*, kota.nama_kota");
         $this->db->from("teknisi");
-        $this->db->join("kota", "teknisi.ID_KOTA = kota.ID_KOTA", "left");
+        $this->db->join("kota", "teknisi.id_kota = kota.id_kota", "left");
         $this->db->where("id_kota", $kota);
         return $this->db->get()->result();
     }
-    
+
     public function get_where(array $cond)
     {
-        $this->db->select("teknisi.*, kota.NAMA_KOTA");
+        $this->db->select("teknisi.*, kota.nama_kota");
         $this->db->from("teknisi");
-        $this->db->join("kota", "teknisi.ID_KOTA = kota.ID_KOTA", "left");
+        $this->db->join("kota", "teknisi.id_kota = kota.id_kota", "left");
         $this->db->where($cond);
         return $this->db->get()->result();
     }
@@ -77,18 +77,20 @@ class M_Teknisi extends CI_Model {
         $this->db->where('id_teknisi', $id);
         return $this->db->update('teknisi', array('status' => 'N'));
     }
-    
+
     public function activate($id)
     {
         $this->db->where('id_teknisi', $id);
         return $this->db->update('teknisi', array('status' => 'Y'));
     }
-    
-    public function genId() 
+
+    public function genId()
     {
-        $this->db->select("ifnull(max(right(id_teknisi, 3)), 0) + 1 as ID");
+        $this->db->select("max(right(id_teknisi, 3)) as id");
         $this->db->from("teknisi");
-        $counter = '000'.$this->db->get()->result()[0]->ID;
+        $id = $this->db->get()->result()[0]->id;
+        $id = $id==null?1:($id+1);
+        $counter = '000'.$id;
         return 'T'.substr($counter, strlen($counter) - 3, 3);
     }
 }
