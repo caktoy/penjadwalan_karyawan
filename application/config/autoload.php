@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database', 'session', 'email');
+$autoload['libraries'] = array('database', 'session', 'email', 'pdfgenerator');
 
 /*
 | -------------------------------------------------------------------
@@ -137,5 +137,6 @@ $autoload['model'] = array(
     'M_Kota'        => 'tbl_kota',
     'M_Teknisi'     => 'tbl_teknisi',
     'M_Site'        => 'tbl_site',
+    'M_Jadwal'		=> 'tbl_jadwal',
     'M_Security'    => '_security',
 );

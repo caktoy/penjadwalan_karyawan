@@ -179,60 +179,60 @@
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
 			$(document).ready(function() {
-                            //initiate dataTables plugin
-                            var oTable1 = 
-                            $('#dynamic-table')
-                            //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-                            .dataTable( {
-                                    bAutoWidth: false,
-                                    "aoColumns": [
-                                      { "bSortable": false },
-                                      null, null,null, null, null,
-                                      { "bSortable": false }
-                                    ],
-                                    "aaSorting": [],
+                //initiate dataTables plugin
+                var oTable1 = 
+                $('#dynamic-table')
+                //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+                .dataTable( {
+                    bAutoWidth: false,
+      //               "aoColumns": [
+						// { "bSortable": false },
+						// null, null,null, null, null,
+						// { "bSortable": false }
+      //               ],
+      //               "aaSorting": [],
 
-                                    //,
-                                    //"sScrollY": "200px",
-                                    //"bPaginate": false,
+                    //,
+                    //"sScrollY": "200px",
+                    //"bPaginate": false,
 
-                                    //"sScrollX": "100%",
-                                    //"sScrollXInner": "120%",
-                                    //"bScrollCollapse": true,
-                                    //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
-                                    //you may want to wrap the table inside a "div.dataTables_borderWrap" element
+                    //"sScrollX": "100%",
+                    //"sScrollXInner": "120%",
+                    //"bScrollCollapse": true,
+                    //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
+                    //you may want to wrap the table inside a "div.dataTables_borderWrap" element
 
-                                    //"iDisplayLength": 50,
-                                    
-                                    "language": {
-                                        "lengthMenu": "Menampilkan _MENU_ data per halaman",
-                                        "zeroRecords": "Maaf, tidak ada data yang ditampilkan.",
-                                        "info": "Halaman _PAGE_ dari _PAGES_",
-                                        "infoEmpty": "Tidak ada data yang tersedia",
-                                        "search": "Cari:",
-                                        "decimal": ",",
-                                        "thousands": ".",
-                                        "paginate": {
-                                            "previous": "<",
-                                            "next": ">",
-                                            "first": "<<",
-                                            "last": ">>"
-                                        },
-                                        "infoFiltered": "(Penyaringan dari _MAX_ total data)"
-                                    }
-			    } );
-                            //oTable1.fnAdjustColumnSizing();
-                            
-                            // date-picker plugin
-                            $('.date-picker').datepicker({
-                                    autoclose: true,
-                                    todayHighlight: true
-                            })
-                            //show datepicker when clicking on the icon
-                            .next().on(ace.click_event, function(){
-                                    $(this).prev().focus();
-                            });
-                        });
+                    //"iDisplayLength": 50,
+                    
+                    "language": {
+                        "lengthMenu": "Menampilkan _MENU_ data per halaman",
+                        "zeroRecords": "Maaf, tidak ada data yang ditampilkan.",
+                        "info": "Halaman _PAGE_ dari _PAGES_",
+                        "infoEmpty": "Tidak ada data yang tersedia",
+                        "search": "Cari:",
+                        "decimal": ",",
+                        "thousands": ".",
+                        "paginate": {
+                            "previous": "<",
+                            "next": ">",
+                            "first": "<<",
+                            "last": ">>"
+                        },
+                        "infoFiltered": "(Penyaringan dari _MAX_ total data)"
+                    }
+				});
+                //oTable1.fnAdjustColumnSizing();
+                
+                // date-picker plugin
+                $('.date-picker').datepicker({
+                    autoclose: true,
+                    todayHighlight: true
+                })
+                //show datepicker when clicking on the icon
+                .next().on(ace.click_event, function(){
+                    $(this).prev().focus();
+                });
+            });
 		</script>
 	</body>
 </html>

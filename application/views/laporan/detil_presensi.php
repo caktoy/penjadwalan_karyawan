@@ -10,13 +10,13 @@
     <div class="col-md-12">
         <h3 class="header smaller lighter blue"><?php echo $judul; ?></h3>
         
-        <form class="form-horizontal" role="form" method="post" action="#">
+        <form class="form-horizontal" role="form" method="post" action="<?php echo base_url().'laporan/detil/lihat'; ?>">
             <div class="col-md-6">                        
                 <div class="form-group">
                     <label class="col-sm-3 control-label no-padding-right" for="awal"> Tanggal Awal </label>
 
                     <div class="col-sm-4">
-                        <input type="date" id="awal" name="awal" class="form-control" />
+                        <input type="date" id="awal" name="awal" class="form-control" required />
                     </div>
                 </div>
             
@@ -24,7 +24,7 @@
                     <label class="col-sm-3 control-label no-padding-right" for="akhir"> Tanggal Akhir </label>
 
                     <div class="col-sm-4">
-                        <input type="date" id="akhir" name="akhir" class="form-control" />
+                        <input type="date" id="akhir" name="akhir" class="form-control" required />
                     </div>
                 </div>
             

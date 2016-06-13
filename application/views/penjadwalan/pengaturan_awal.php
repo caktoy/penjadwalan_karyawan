@@ -11,7 +11,7 @@
         <h3 class="header smaller lighter blue">Penjadwalan</h3>
         
         <div class="row">
-            <form class="form-horizontal" role="form" method="post" action="<?php echo base_url(); ?>index.php/penjadwalan/save_setting">
+            <form class="form-horizontal" role="form" method="post" action="<?php echo base_url(); ?>penjadwalan/save_setting">
                     <div class="col-md-6">                        
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right" for="tahun"> Tahun </label>
@@ -66,7 +66,7 @@
             var tahun = $('#tahun').val();
             var kerja = $('#kerja').val();
             var libur = $('#libur').val();
-            var url = '<?php echo base_url(); ?>index.php/penjadwalan/do/'+tahun+'/'+kerja+'/'+libur;
+            var url = '<?php echo base_url(); ?>penjadwalan/do/'+tahun+'/'+kerja+'/'+libur;
             window.location.href = url;
         });
     });

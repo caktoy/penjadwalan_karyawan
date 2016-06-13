@@ -28,6 +28,32 @@ class M_Jadwal extends CI_Model {
         return $this->db->get_where('jadwal', $cond)->result();
     }
 
+    public function get_presensi($awal, $akhir)
+    {
+        $this->db->select("teknisi.nama_teknisi as nama, 
+            (select count(*) from jadwal where id_teknisi = teknisi.id_teknisi and tanggal >= '".$awal."' and tanggal <= '".$akhir."' and keterangan = 'S') as sakit,
+            (select count(*) from jadwal where id_teknisi = teknisi.id_teknisi and tanggal >= '".$awal."' and tanggal <= '".$akhir."' and keterangan = 'H') as hadir,
+            (select count(*) from jadwal where id_teknisi = teknisi.id_teknisi and tanggal >= '".$awal."' and tanggal <= '".$akhir."' and keterangan = 'I') as izin,
+            (select count(*) from jadwal where id_teknisi = teknisi.id_teknisi and tanggal >= '".$awal."' and tanggal <= '".$akhir."' and keterangan = 'A') as alpha,
+            (select count(*) from jadwal where id_teknisi = teknisi.id_teknisi and tanggal >= '".$awal."' and tanggal <= '".$akhir."' and keterangan = 'C') as cuti");
+        $this->db->from('jadwal');
+        $this->db->join('teknisi', 'jadwal.id_teknisi = teknisi.id_teknisi', 'left');
+        $this->db->where("jadwal.tanggal >=", $awal);
+        $this->db->where("jadwal.tanggal <=", $akhir);
+        return $this->db->get()->result();
+    }
+
+    public function get_input_presensi($tanggal)
+    {
+        $this->db->select("jadwal.id_teknisi, teknisi.nama_teknisi, jadwal.id_site, site.nama_site, jadwal.keterangan");
+        $this->db->from('jadwal');
+        $this->db->join('teknisi', 'jadwal.id_teknisi = teknisi.id_teknisi', 'left');
+        $this->db->join('site', 'jadwal.id_site = site.id_site', 'left');
+        $this->db->where("jadwal.tanggal", $tanggal);
+        $this->db->order_by("jadwal.id_teknisi", "asc");
+        return $this->db->get()->result();
+    }
+
     public function add($teknisi, $site, $tanggal, $keterangan)
     {
         return $this->db->insert('jadwal', array(
@@ -36,6 +62,15 @@ class M_Jadwal extends CI_Model {
             'tanggal' => $tanggal,
             'keterangan' => $keterangan
             ));
+    }
+
+    public function update_keterangan($tanggal, $teknisi, $keterangan)
+    {
+        $this->db->where(array(
+            'tanggal' => $tanggal,
+            'id_teknisi' => $teknisi
+            ));
+        return $this->db->update('jadwal', array('keterangan' => $keterangan));
     }
 
     public function edit($teknisi, $site, $tanggal, $keterangan, $teknisi_u, $site_u, $tanggal_u, $keterangan_u)

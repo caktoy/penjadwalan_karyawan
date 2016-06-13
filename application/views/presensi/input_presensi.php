@@ -55,7 +55,6 @@
 
 <div class="row">
     <div class="col-md-12" id="technicianTable">
-        
     </div>
 </div>
 
@@ -75,11 +74,21 @@
     }
 
     function showTechnician(tgl) {
-        var tanggal = tgl;
         var bulan = $('#bulan').val();
         var tahun = $('#tahun').val();
-        var hasil = tanggal+'-'+bulan+'-'+tahun;
-        $('#technicianTable').html(hasil);
+        var hasil = tgl+'-'+bulan+'-'+tahun;
+        $.ajax({
+            url: '<?php echo base_url(); ?>' + 'presensi/jadwal_teknisi',
+            data: {'tanggal': hasil},
+            dataType: 'html',
+            type: 'post',
+            success: function(result) {
+                $('#technicianTable').html(result);
+            },
+            error: function(xhr, status, error) {
+                $('#technicianTable').html(error);
+            }
+        });
     }
 
     $(document).ready(function() {
