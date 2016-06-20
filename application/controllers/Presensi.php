@@ -52,5 +52,14 @@ class Presensi extends CI_Controller
 
 		redirect('presensi');
 	}
+
+	public function cek_isi($tanggal)
+	{
+		$cek_isi = $this->tbl_jadwal->check_isi($tanggal);
+		if(count($cek_isi) > 0)
+			echo "ada";
+		else
+			echo "tidak";
+	}
 }
 ?>

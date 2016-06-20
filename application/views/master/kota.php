@@ -81,10 +81,12 @@
                             <tr>
                                 <td>
                                     <span class="hidden-sm hidden-xs action-buttons">
-                                        <a class="green" href="javascript:void(0);" onclick="fill('<?php echo $k->id_provinsi; ?>', '<?php echo $k->nama_provinsi; ?>')">
+                                        <a class="green" href="#modal-provinsi" role="button" data-toggle="modal" 
+                                            onclick="fill_provinsi('<?php echo $k->id_provinsi; ?>', '<?php echo $k->nama_provinsi; ?>', '<?php echo $k->status_provinsi; ?>')">
                                             <i class="ace-icon fa fa-pencil bigger-130"></i>
                                         </a>
-                                        <a href="<?php echo base_url().'index.php/kota/activate_provinsi/'.$k->id_provinsi; ?>" onclick="return confirm('Anda yakin?');">
+                                        <a href="<?php echo base_url().'index.php/kota/activate_provinsi/'.$k->id_provinsi; ?>" 
+                                            onclick="return confirm('Anda yakin?\nInfo: Semua kota yang ada pada Provinsi <?php echo strtoupper($p->nama_provinsi); ?> juga akan dinon-aktifkan/diaktifkan.');">
                                             <?php if($k->status_provinsi == "Y") { ?>
                                             <i class="ace-icon fa fa-remove bigger-130 red"></i>
                                             <?php } else { ?>
@@ -129,12 +131,12 @@
           Tambah Provinsi
         </div>
       </div>
-      <form class='form-horizontal' role='form' action='<?php echo base_url()."index.php/kota/tambah_provinsi"; ?>' method='post' enctype="multipart/form-data">
-            <div class='modal-body no-padding'>
+      <form class='form-horizontal' role='form' action='<?php echo base_url()."kota/tambah_provinsi"; ?>' method='post' enctype="multipart/form-data">
+            <div class='modal-body'>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label no-padding-right" for="nama_prov_new"> Nama Provinsi </label>
+                    <label class="col-sm-3 control-label no-padding-right" for="nama_prov_new"> Nama Provinsi </label>
 
-                    <div class="col-sm-5">
+                    <div class="col-sm-8">
                         <input type="text" id="nama_prov_new" name="nama_prov_new" placeholder="Nama Provinsi" class="col-xs-10 col-sm-5 form-control" />
                     </div>
                 </div>
@@ -152,6 +154,48 @@
   </div>
 </div>
 
+<div id="modal-provinsi" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form class="form-horizontal" method="post" role="form" enctype="multipart/form-data" action="<?php echo base_url().'kota/ubah_provinsi'; ?>">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        Ubah Provinsi
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="id_provinsi-u" name="id_provinsi-u">
+                    <input type="hidden" id="status-u" name="status-u">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="nama_provinsi-u"> Nama Provinsi </label>
+
+                        <div class="col-sm-8">
+                            <input type="text" id="nama_provinsi-u" name="nama_provinsi-u" placeholder="Nama Provinsi" class="col-xs-10 col-sm-5 form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-success pull-left">
+                        <i class="ace-icon fa fa-check"></i>
+                        Simpan
+                    </button>
+
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">
+                        <i class="ace-icon fa fa-times"></i>
+                        Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <script type="text/javascript">
     function fill(id, prov, nama) {
         $("#id_kota").val(id);
@@ -159,9 +203,15 @@
         $("#nama_kota").val(nama);
     }
 
+    function fill_provinsi(id, prov, status) {
+        $("#id_provinsi-u").val(id);
+        $("#nama_provinsi-u").val(prov);
+        $("#status-u").val(status);
+    }
+
     function load_provinsi(provinsi) {
         $.ajax({
-            url: '<?php echo base_url()."index.php/kota/provinsi"; ?>',
+            url: '<?php echo base_url()."kota/provinsi"; ?>',
             type: 'post',
             data: {'provinsi': provinsi},
             dataType: 'json',

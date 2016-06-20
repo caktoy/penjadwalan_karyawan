@@ -45,6 +45,20 @@ class Kota extends CI_Controller {
         }
         redirect('kota');
     }
+
+    public function ubah_provinsi() {
+        $id_provinsi = $this->input->post('id_provinsi-u');
+        $nama_provinsi = $this->input->post('nama_provinsi-u');
+        $status = $this->input->post('status-u');
+        
+        $act = $this->tbl_provinsi->edit($id_provinsi, $nama_provinsi, $status);
+        if ($act > 0) {
+                $this->session->set_flashdata('pesan', '<b>Berhasil!</b> Data provinsi telah diubah.');
+        } else {
+                $this->session->set_flashdata('pesan', '<b>Gagal!</b> Data provinsi gagal diubah.');
+        }
+        redirect('kota');
+    }
     
     public function tambah_ubah_kota() {
         $id_kota = $this->input->post('id_kota');

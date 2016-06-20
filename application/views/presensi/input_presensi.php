@@ -64,13 +64,32 @@
     }
 
     function showDaysButton(total) {
-        $('#groupTanggal').html("");
+        var tahun = $('#tahun').val();
+        var bulan = $('#bulan').val();
         var groupTanggal = $('#groupTanggal').html();
         for(var i = 1; i<=total; i++) {
-            var btnHtml = "<button class='btn btn-default' type='button' onclick='showTechnician(" + i + ")'>" + i + "</button>";
+            var tanggal = tahun + '-' + bulan + '-' + i;
+            var typeClass = 'btn-default';
+            if(checkIsi(tanggal))
+                typeClass = 'btn-warning';
+            else 
+                typeClass = 'btn-primary';
+            var btnHtml = "<button class='btn " + typeClass + "' type='button' onclick='showTechnician(" + i + ")'>" + i + "</button>";
             groupTanggal = groupTanggal + btnHtml;
         }
         $('#groupTanggal').html(groupTanggal);
+    }
+
+    function checkIsi(tanggal) {
+        var hasil = false;
+        var url = '<?php echo base_url(); ?>' + 'presensi/cek_isi/' + tanggal;
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", url, false);
+        xmlHttp.send();
+        var resp = xmlHttp.responseText;
+        if(resp == "ada") 
+            hasil = true;
+        return hasil;
     }
 
     function showTechnician(tgl) {

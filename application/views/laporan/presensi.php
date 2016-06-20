@@ -16,6 +16,12 @@
                     <label class="col-sm-3 control-label no-padding-right" for="awal"> Tanggal Awal </label>
 
                     <div class="col-sm-4">
+                        <!-- <div class="input-group">
+                            <input type="text" id="awal" name="awal" class="form-control date-picker" data-date-format="mm/dd/yyyy" required />
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar bigger-110"></i>
+                            </span>
+                        </div> -->
                         <input type="date" id="awal" name="awal" class="form-control" required />
                     </div>
                 </div>

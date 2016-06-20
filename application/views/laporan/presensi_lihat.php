@@ -2,7 +2,7 @@
     <?php echo $judul; ?><br>
     <?php echo $subjudul; ?>
 </div>
-<table cellpadding="2" cellspacing="0" border="1" width="100%" style="font-size: 12pt;">
+<table cellpadding="2" cellspacing="0" border="1" width="100%" id="dynamic-table" class="table table-striped table-bordered table-hover">
     <thead>
         <tr style="font-weight: bold;">
             <th style="text-align: center;">

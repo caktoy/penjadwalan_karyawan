@@ -56,7 +56,7 @@ class M_Jadwal extends CI_Model {
 
     public function add($teknisi, $site, $tanggal, $keterangan)
     {
-        return $this->db->insert('jadwal', array(
+        return $this->db->insert('public.jadwal', array(
             'id_teknisi' => $teknisi,
             'id_site' => $site,
             'tanggal' => $tanggal,
@@ -70,7 +70,7 @@ class M_Jadwal extends CI_Model {
             'tanggal' => $tanggal,
             'id_teknisi' => $teknisi
             ));
-        return $this->db->update('jadwal', array('keterangan' => $keterangan));
+        return $this->db->update('public.jadwal', array('keterangan' => $keterangan));
     }
 
     public function edit($teknisi, $site, $tanggal, $keterangan, $teknisi_u, $site_u, $tanggal_u, $keterangan_u)
@@ -81,7 +81,7 @@ class M_Jadwal extends CI_Model {
             'tanggal' => $tanggal,
             'keterangan' => $keterangan
         ));
-        return $this->db->update('jadwal', array(
+        return $this->db->update('public.jadwal', array(
             'id_teknisi' => $teknisi_u,
             'id_site' => $site_u,
             'tanggal' => $tanggal_u,
@@ -96,7 +96,15 @@ class M_Jadwal extends CI_Model {
             'id_site' => $site,
             'tanggal' => $tanggal
         ));
-        return $this->db->delete('jadwal');
+        return $this->db->delete('public.jadwal');
+    }
+
+    public function check_isi($tanggal)
+    {
+        return $this->db->get_where('public.jadwal', array(
+                'tanggal' => $tanggal,
+                'keterangan is not' => null
+            ))->result();
     }
 }
 ?>

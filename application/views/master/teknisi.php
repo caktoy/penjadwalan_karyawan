@@ -10,7 +10,8 @@
         <div class="col-md-12">
                 <h3 class="header smaller lighter blue">Master Teknisi</h3>
                 
-                <form class="form-horizontal" role="form" method="post" action="<?php echo base_url().'index.php/teknisi/tambah_ubah' ?>">
+                <form class="form-horizontal" role="form" name="formTeknisi" method="post" action="<?php echo base_url().'teknisi/tambah_ubah' ?>"
+                    onsubmit="return validateForm()">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -42,6 +43,9 @@
 
                                     <div class="col-sm-9">
                                         <input type="text" id="telp" name="telp" placeholder="No. Telepon" class="col-xs-10 col-sm-5 form-control" />
+                                        <span class="help-inline col-xs-12 col-sm-7">
+                                            <span class="middle red" id="validator"></span>
+                                        </span>
                                     </div>
                                 </div>
                                 
@@ -201,5 +205,13 @@
                 alert("Gagal!");
             }
         });
+    }
+
+    function validateForm() {
+        var x = document.forms["formTeknisi"]["telp"].value;
+        if (isNaN(x)) {
+            $('#validator').html("Mohon masukkan angka!");
+            return false;
+        }
     }
 </script>

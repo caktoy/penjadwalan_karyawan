@@ -182,7 +182,7 @@
                 //initiate dataTables plugin
                 var oTable1 = 
                 $('#dynamic-table')
-                //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+                .wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
                 .dataTable( {
                     bAutoWidth: false,
       //               "aoColumns": [
@@ -193,7 +193,7 @@
       //               "aaSorting": [],
 
                     //,
-                    //"sScrollY": "200px",
+                    "sScrollY": "350px",
                     //"bPaginate": false,
 
                     //"sScrollX": "100%",
@@ -221,7 +221,7 @@
                         "infoFiltered": "(Penyaringan dari _MAX_ total data)"
                     }
 				});
-                //oTable1.fnAdjustColumnSizing();
+                oTable1.fnAdjustColumnSizing();
                 
                 // date-picker plugin
                 $('.date-picker').datepicker({
