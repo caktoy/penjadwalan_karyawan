@@ -66,12 +66,13 @@
     function showDaysButton(total) {
         var tahun = $('#tahun').val();
         var bulan = $('#bulan').val();
+        $('#groupTanggal').html("");
         var groupTanggal = $('#groupTanggal').html();
         for(var i = 1; i<=total; i++) {
             var tanggal = tahun + '-' + bulan + '-' + i;
-            var typeClass = 'btn-default';
+            var typeClass = 'btn-primary';
             if(checkIsi(tanggal))
-                typeClass = 'btn-warning';
+                typeClass = 'btn-success';
             else 
                 typeClass = 'btn-primary';
             var btnHtml = "<button class='btn " + typeClass + "' type='button' onclick='showTechnician(" + i + ")'>" + i + "</button>";

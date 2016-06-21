@@ -1,6 +1,7 @@
 <div style="display: block;width: 100%;text-align: center;font-weigth: bold;font-size: 14pt;padding-bottom: 40px;">
     <?php echo $judul; ?><br>
-    <?php echo $subjudul; ?>
+    <?php echo $subjudul; ?><br>
+    <?php echo "Masa Kerja: ".($periode->days + 1)." Hari"; ?>
 </div>
 <table cellpadding="2" cellspacing="0" border="1" width="100%" id="dynamic-table" class="table table-striped table-bordered table-hover">
     <thead>

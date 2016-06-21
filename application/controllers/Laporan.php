@@ -26,6 +26,10 @@ class Laporan extends CI_Controller
 		        $data['presensi'] = $this->tbl_jadwal->get_presensi($awal, $akhir);
 		        $data['awal'] = $awal;
 		        $data['akhir'] = $akhir;
+
+		        $tgl_awal = date_create($awal);
+		        $tgl_akhir = date_create($akhir);
+		        $data['periode'] = date_diff($tgl_awal, $tgl_akhir);
 		        $data['cetak'] = base_url().'laporan/presensi/cetak';
 
 		        $this->load->view('index', $data);
@@ -39,6 +43,9 @@ class Laporan extends CI_Controller
 		        $data['judul'] = 'Laporan Presensi Teknisi';
 		        $data['subjudul'] = date('d M Y', strtotime($awal)).' - '.date('d M Y', strtotime($akhir));
 		        $data['presensi'] = $this->tbl_jadwal->get_presensi($awal, $akhir);
+		        $tgl_awal = date_create($awal);
+		        $tgl_akhir = date_create($akhir);
+		        $data['periode'] = date_diff($tgl_awal, $tgl_akhir);
 		        
 		        $this->pdfgenerator->generate('laporan/presensi_lihat', 'presensi_'.$awal.'_'.$akhir, 'portrait', $data);
 				break;

@@ -40,6 +40,7 @@ class M_Jadwal extends CI_Model {
         $this->db->join('teknisi', 'jadwal.id_teknisi = teknisi.id_teknisi', 'left');
         $this->db->where("jadwal.tanggal >=", $awal);
         $this->db->where("jadwal.tanggal <=", $akhir);
+        // $this->db->group_by("teknisi.nama_teknisi");
         return $this->db->get()->result();
     }
 
