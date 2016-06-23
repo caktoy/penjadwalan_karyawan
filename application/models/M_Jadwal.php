@@ -30,17 +30,17 @@ class M_Jadwal extends CI_Model {
 
     public function get_presensi($awal, $akhir)
     {
-        $this->db->select("teknisi.nama_teknisi as nama, 
+        $this->db->distinct();
+        $this->db->select("teknisi.id_teknisi as id, teknisi.nama_teknisi as nama, 
             (select count(*) from jadwal where id_teknisi = teknisi.id_teknisi and tanggal >= '".$awal."' and tanggal <= '".$akhir."' and keterangan = 'S') as sakit,
             (select count(*) from jadwal where id_teknisi = teknisi.id_teknisi and tanggal >= '".$awal."' and tanggal <= '".$akhir."' and keterangan = 'H') as hadir,
             (select count(*) from jadwal where id_teknisi = teknisi.id_teknisi and tanggal >= '".$awal."' and tanggal <= '".$akhir."' and keterangan = 'I') as izin,
             (select count(*) from jadwal where id_teknisi = teknisi.id_teknisi and tanggal >= '".$awal."' and tanggal <= '".$akhir."' and keterangan = 'A') as alpha,
             (select count(*) from jadwal where id_teknisi = teknisi.id_teknisi and tanggal >= '".$awal."' and tanggal <= '".$akhir."' and keterangan = 'C') as cuti");
-        $this->db->from('jadwal');
-        $this->db->join('teknisi', 'jadwal.id_teknisi = teknisi.id_teknisi', 'left');
+        $this->db->from("jadwal");
+        $this->db->join("teknisi", "jadwal.id_teknisi = teknisi.id_teknisi", "left");
         $this->db->where("jadwal.tanggal >=", $awal);
         $this->db->where("jadwal.tanggal <=", $akhir);
-        // $this->db->group_by("teknisi.nama_teknisi");
         return $this->db->get()->result();
     }
 

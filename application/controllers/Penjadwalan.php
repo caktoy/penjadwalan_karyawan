@@ -53,16 +53,14 @@ class Penjadwalan extends CI_Controller
 		redirect('penjadwalan');
 	}
 
-	public function do($tahun, $kerja, $libur)
+	public function do()
 	{
-		// echo "Tahun: ".$tahun."<br>Kerja: ".$kerja." Minggu<br>Libur: ".$libur." Minggu";
- 
-		// rumus awal: (i+j-r)mod(n-1) = 0
-		// rumus modif: (i-r)mod(n-1) = j+5
-		// i: site
-		// j: teknisi
-		// r: round
-		// n: jumlah site
+		$tahun = $this->input->post('tahun');
+		$kerja = $this->input->post('kerja');
+		$libur = $this->input->post('libur');
+
+		$setting = $tahun.';'.$kerja.';'.$libur.';';
+		write_file('./pengaturan_penjadwalan.txt', $setting);
 
 		$total_week		= date('W', strtotime('December 31st, '.$tahun));
 		$round			= floor($total_week/$kerja);

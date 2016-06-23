@@ -11,7 +11,7 @@
         <h3 class="header smaller lighter blue">Penjadwalan</h3>
         
         <div class="row">
-            <form class="form-horizontal" role="form" method="post" action="<?php echo base_url(); ?>penjadwalan/save_setting">
+            <form class="form-horizontal" role="form" method="post" action="<?php echo base_url(); ?>penjadwalan/do">
                     <div class="col-md-6">                        
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right" for="tahun"> Tahun </label>
@@ -38,18 +38,11 @@
                         </div>
                     
                         <div class="col-md-offset-3 col-md-9">
-                            <button class="btn btn-primary" type="submit">
-                                <i class="ace-icon fa fa-check bigger-110"></i>
-                                Simpan
-                            </button>
-
-                            &nbsp;
-                            <button class="btn btn-success" type="button" id="jalankan">
+                            <button class="btn btn-success" type="submit">
                                 <i class="ace-icon fa fa-play bigger-110"></i>
-                                Jalankan
+                                Simpan & Jalankan
                             </button>
-
-                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp;
                             <button class="btn btn-danger" type="reset">
                                 <i class="ace-icon fa fa-undo bigger-110"></i>
                                 Reset
@@ -60,14 +53,3 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#jalankan').click(function() {
-            var tahun = $('#tahun').val();
-            var kerja = $('#kerja').val();
-            var libur = $('#libur').val();
-            var url = '<?php echo base_url(); ?>penjadwalan/do/'+tahun+'/'+kerja+'/'+libur;
-            window.location.href = url;
-        });
-    });
-</script>
