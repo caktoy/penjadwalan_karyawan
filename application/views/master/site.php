@@ -10,7 +10,7 @@
         <div class="col-md-12">
                 <h3 class="header smaller lighter blue">Master Site</h3>
                 
-                <form class="form-horizontal" role="form" method="post" name="formSite" action="<?php echo base_url().'index.php/site/tambah_ubah'; ?>" 
+                <form class="form-horizontal" role="form" method="post" name="formSite" action="<?php echo base_url().'site/tambah_ubah'; ?>" 
                     onsubmit="return validateForm()">
                         <div class="row">
                             <div class="col-md-6">

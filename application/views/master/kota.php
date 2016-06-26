@@ -10,7 +10,7 @@
         <div class="col-md-12">
                 <h3 class="header smaller lighter blue">Master Site</h3>
 
-                <form class="form-horizontal" role="form" action="<?php echo base_url().'index.php/kota/tambah_ubah_kota'; ?>" method="post">
+                <form class="form-horizontal" role="form" action="<?php echo base_url().'kota/tambah_ubah_kota'; ?>" method="post">
                         <div class="form-group">
                             <label class="col-sm-2 control-label no-padding-right" for="provinsi"> Provinsi </label>
 

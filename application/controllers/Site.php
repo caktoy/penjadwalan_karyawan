@@ -8,7 +8,7 @@ class Site extends CI_Controller {
         $data['menu'] = array("Data Master", "Master Site");
         
         $data['kota'] = $this->tbl_kota->get_where(array('kota.status' => 'Y'));
-        $data['site'] = $this->tbl_site->get_all();
+        $data['site'] = $this->tbl_site->get_where(array('site.status' => 'Y'));
         
         $data['id_site'] = $this->tbl_site->genId();
         
@@ -30,17 +30,31 @@ class Site extends CI_Controller {
         $telp = $this->input->post('telp');
         $status = "Y";
         
-        $check = $this->tbl_site->get_id($id);
-        if(sizeof($check) > 0)
+        $check_site = $this->tbl_site->get_where(
+                array(
+                        'lower(site.id_kota)'  => strtolower($kota),
+                        'lower(nama_site)'     => strtolower($nama),
+                        'lower(alamat_site)'   => strtolower($alamat)
+                    )
+            );
+        
+        if(count($check_site) > 0) {
+            $id = $check_site[0]->id_site;
             $act = $this->tbl_site->edit($id, $kota, $nama, $alamat, $telp, $status);
-        else
-            $act = $this->tbl_site->add($id, $kota, $nama, $alamat, $telp, $status);
+        } else {
+            $check = $this->tbl_site->get_id($id);
+            if(sizeof($check) > 0)
+                $act = $this->tbl_site->edit($id, $kota, $nama, $alamat, $telp, $status);
+            else
+                $act = $this->tbl_site->add($id, $kota, $nama, $alamat, $telp, $status);
+        }
         
         if ($act > 0) {
                 $this->session->set_flashdata('pesan', '<b>Berhasil!</b> Data site telah disimpan.');
         } else {
                 $this->session->set_flashdata('pesan', '<b>Gagal!</b> Data site gagal disimpan.');
         }
+
         redirect('site');
     }
     

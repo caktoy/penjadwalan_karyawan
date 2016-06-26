@@ -8,44 +8,78 @@ class M_Teknisi extends CI_Model {
 
     public function get_all()
     {
-        $this->db->select("teknisi.*, kota.nama_kota");
+        $this->db->select("teknisi.*, 
+            kota_lokasi.id_kota as id_kota_lokasi, 
+            kota_lokasi.nama_kota as kota_lokasi, 
+            kota_lahir.id_kota as id_kota_lahir,
+            kota_lahir.nama_kota as kota_lahir");
         $this->db->from("teknisi");
-        $this->db->join("kota", "teknisi.id_kota = kota.id_kota", "left");
+        $this->db->join("kota as kota_lokasi", "teknisi.id_kota_lokasi = kota_lokasi.id_kota", "left");
+        $this->db->join("kota as kota_lahir", "teknisi.id_kota_lahir = kota_lahir.id_kota", "left");
         $this->db->order_by("teknisi.id_teknisi", "asc");
         return $this->db->get()->result();
     }
 
     public function get_id($id)
     {
-        $this->db->select("teknisi.*, kota.nama_kota");
+        $this->db->select("teknisi.*, 
+            kota_lokasi.id_kota as id_kota_lokasi, 
+            kota_lokasi.nama_kota as kota_lokasi, 
+            kota_lahir.id_kota as id_kota_lahir,
+            kota_lahir.nama_kota as kota_lahir");
         $this->db->from("teknisi");
-        $this->db->join("kota", "teknisi.id_kota = kota.id_kota", "left");
-        $this->db->where("id_teknisi", $id);
+        $this->db->join("kota as kota_lokasi", "teknisi.id_kota_lokasi = kota_lokasi.id_kota", "left");
+        $this->db->join("kota as kota_lahir", "teknisi.id_kota_lahir = kota_lahir.id_kota", "left");
+        $this->db->where("teknisi.id_teknisi", $id);
         return $this->db->get()->result();
     }
 
-    public function get_kota($kota) {
-        $this->db->select("teknisi.*, kota.nama_kota");
+    public function get_kota_lokasi($kota) {
+        $this->db->select("teknisi.*, 
+            kota_lokasi.id_kota as id_kota_lokasi, 
+            kota_lokasi.nama_kota as kota_lokasi, 
+            kota_lahir.id_kota as id_kota_lahir,
+            kota_lahir.nama_kota as kota_lahir");
         $this->db->from("teknisi");
-        $this->db->join("kota", "teknisi.id_kota = kota.id_kota", "left");
-        $this->db->where("id_kota", $kota);
+        $this->db->join("kota as kota_lokasi", "teknisi.id_kota_lokasi = kota_lokasi.id_kota", "left");
+        $this->db->join("kota as kota_lahir", "teknisi.id_kota_lahir = kota_lahir.id_kota", "left");
+        $this->db->where("kota_lokasi.id_kota", $kota);
+        return $this->db->get()->result();
+    }
+
+    public function get_kota_lahir($kota) {
+        $this->db->select("teknisi.*, 
+            kota_lokasi.id_kota as id_kota_lokasi, 
+            kota_lokasi.nama_kota as kota_lokasi, 
+            kota_lahir.id_kota as id_kota_lahir,
+            kota_lahir.nama_kota as kota_lahir");
+        $this->db->from("teknisi");
+        $this->db->join("kota as kota_lokasi", "teknisi.id_kota_lokasi = kota_lokasi.id_kota", "left");
+        $this->db->join("kota as kota_lahir", "teknisi.id_kota_lahir = kota_lahir.id_kota", "left");
+        $this->db->where("kota_lahir.id_kota", $kota);
         return $this->db->get()->result();
     }
 
     public function get_where(array $cond)
     {
-        $this->db->select("teknisi.*, kota.nama_kota");
+        $this->db->select("teknisi.*, 
+            kota_lokasi.id_kota as id_kota_lokasi, 
+            kota_lokasi.nama_kota as kota_lokasi, 
+            kota_lahir.id_kota as id_kota_lahir,
+            kota_lahir.nama_kota as kota_lahir");
         $this->db->from("teknisi");
-        $this->db->join("kota", "teknisi.id_kota = kota.id_kota", "left");
+        $this->db->join("kota as kota_lokasi", "teknisi.id_kota_lokasi = kota_lokasi.id_kota", "left");
+        $this->db->join("kota as kota_lahir", "teknisi.id_kota_lahir = kota_lahir.id_kota", "left");
         $this->db->where($cond);
         return $this->db->get()->result();
     }
 
-    public function add($id, $kota, $nama, $alamat, $telp, $email, $tgl, $agama, $jk, $status)
+    public function add($id, $kota_lokasi, $kota_lahir, $nama, $alamat, $telp, $email, $tgl, $agama, $jk, $status)
     {
         return $this->db->insert('teknisi', array(
             'id_teknisi' => $id,
-            'id_kota' => $kota,
+            'id_kota_lokasi' => $kota_lokasi,
+            'id_kota_lahir' => $kota_lahir,
             'nama_teknisi' => $nama,
             'alamat_teknisi' => $alamat,
             'no_telp_teknisi' => $telp,
@@ -57,11 +91,12 @@ class M_Teknisi extends CI_Model {
             ));
     }
 
-    public function edit($id, $kota, $nama, $alamat, $telp, $email, $tgl, $agama, $jk, $status)
+    public function edit($id, $kota_lokasi, $kota_lahir, $nama, $alamat, $telp, $email, $tgl, $agama, $jk, $status)
     {
         $this->db->where('id_teknisi', $id);
         return $this->db->update('teknisi', array(
-            'id_kota' => $kota,
+            'id_kota_lokasi' => $kota_lokasi,
+            'id_kota_lahir' => $kota_lahir,
             'nama_teknisi' => $nama,
             'alamat_teknisi' => $alamat,
             'no_telp_teknisi' => $telp,

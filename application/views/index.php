@@ -221,7 +221,7 @@
                         "infoFiltered": "(Penyaringan dari _MAX_ total data)"
                     }
 				});
-                oTable1.fnAdjustColumnSizing();
+                // oTable1.fnAdjustColumnSizing();
                 
                 // date-picker plugin
                 $('.date-picker').datepicker({

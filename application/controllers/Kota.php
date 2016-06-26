@@ -8,7 +8,7 @@ class Kota extends CI_Controller {
         $data['menu'] = array("Data Master", "Master Provinsi & Kota");
         
         $data['provinsi'] = $this->tbl_provinsi->get_active();
-        $data['kota'] = $this->tbl_kota->get_all();
+        $data['kota'] = $this->tbl_kota->get_where(array('kota.status' => 'Y', 'provinsi.status' => 'Y'));
         
         $data['id_kota'] = $this->tbl_kota->genId();
         
@@ -37,12 +37,19 @@ class Kota extends CI_Controller {
         $nama_provinsi = $this->input->post('nama_prov_new');
         $status = 'Y';
         
-        $act = $this->tbl_provinsi->add($id_provinsi, $nama_provinsi, $status);
-        if ($act > 0) {
-                $this->session->set_flashdata('pesan', '<b>Berhasil!</b> Data provinsi telah disimpan.');
+        $check_prov = $this->tbl_provinsi->get_where(array('lower(nama_provinsi)' => strtolower($nama_provinsi)));
+        if(count($check_prov) > 0) {
+            $id_provinsi = $check_prov[0]->id_provinsi;
+            $act = $this->tbl_provinsi->edit($id_provinsi, $nama_provinsi, $status);
         } else {
-                $this->session->set_flashdata('pesan', '<b>Gagal!</b> Data provinsi gagal disimpan.');
+            $act = $this->tbl_provinsi->add($id_provinsi, $nama_provinsi, $status);
         }
+
+        if ($act > 0) 
+            $this->session->set_flashdata('pesan', '<b>Berhasil!</b> Data provinsi telah disimpan.');
+        else
+            $this->session->set_flashdata('pesan', '<b>Gagal!</b> Data provinsi gagal disimpan.');
+        
         redirect('kota');
     }
 
@@ -52,11 +59,11 @@ class Kota extends CI_Controller {
         $status = $this->input->post('status-u');
         
         $act = $this->tbl_provinsi->edit($id_provinsi, $nama_provinsi, $status);
-        if ($act > 0) {
-                $this->session->set_flashdata('pesan', '<b>Berhasil!</b> Data provinsi telah diubah.');
-        } else {
-                $this->session->set_flashdata('pesan', '<b>Gagal!</b> Data provinsi gagal diubah.');
-        }
+        if ($act > 0)
+            $this->session->set_flashdata('pesan', '<b>Berhasil!</b> Data provinsi telah diubah.');
+        else
+            $this->session->set_flashdata('pesan', '<b>Gagal!</b> Data provinsi gagal diubah.');
+
         redirect('kota');
     }
     
@@ -66,17 +73,30 @@ class Kota extends CI_Controller {
         $nama_kota = $this->input->post('nama_kota');
         $status = 'Y';
         
-        $check = $this->tbl_kota->get_id($id_kota);
-        if(count($check) > 0)
+        $check_kota = $this->tbl_kota->get_where(
+                array(
+                        'kota.id_provinsi'       => $id_provinsi,
+                        'lower(nama_kota)'  => strtolower($nama_kota)
+                    )
+            );
+
+        if(count($check_kota) > 0) {
+            $id_kota = $check_kota[0]->id_kota;
             $act = $this->tbl_kota->edit($id_kota, $id_provinsi, $nama_kota, $status);
-        else
-            $act = $this->tbl_kota->add($id_kota, $id_provinsi, $nama_kota, $status);
+        } else {
+            $check = $this->tbl_kota->get_id($id_kota);
+            if(count($check) > 0)
+                $act = $this->tbl_kota->edit($id_kota, $id_provinsi, $nama_kota, $status);
+            else
+                $act = $this->tbl_kota->add($id_kota, $id_provinsi, $nama_kota, $status);
+        }
         
         if ($act > 0) {
                 $this->session->set_flashdata('pesan', '<b>Berhasil!</b> Data kota telah disimpan.');
         } else {
                 $this->session->set_flashdata('pesan', '<b>Gagal!</b> Data kota gagal disimpan.');
         }
+
         redirect('kota');
     }
     

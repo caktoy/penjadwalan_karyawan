@@ -16,6 +16,11 @@ class M_Provinsi extends CI_Model {
         return $this->db->get_where('public.provinsi', array('id_provinsi' => $id))->result();
     }
 
+    public function get_where(array $cond)
+    {
+        return $this->db->get_where('provinsi', $cond)->result();
+    }
+
     public function get_active()
     {
         return $this->db->get_where('public.provinsi', array('status' => 'Y'))->result();

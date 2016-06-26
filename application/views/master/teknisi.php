@@ -37,6 +37,18 @@
                                         <textarea id="alamat" name="alamat" placeholder="Alamat Teknisi" class="col-xs-10 col-sm-5 form-control"></textarea>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="tmp_lokasi"> Lokasi </label>
+
+                                    <div class="col-sm-9">
+                                        <select id="tmp_lokasi" name="tmp_lokasi" class="col-xs-10 col-sm-5 form-control">
+                                            <?php foreach($kota as $k) { ?>
+                                            <option value="<?php echo $k->id_kota ?>"><?php echo $k->nama_kota ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
                                 
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label no-padding-right" for="telp"> No. Telepon </label>
@@ -137,6 +149,7 @@
                                         <th>ID Teknisi</th>
                                         <th>Nama</th>
                                         <th>Alamat</th>
+                                        <th>Lokasi</th>
                                         <th>No. Telepon</th>
                                         <th>Jenis Kelamin</th>
                                         <th>Tempat, Tanggal Lahir</th>
@@ -153,9 +166,10 @@
                                         <td><?php echo $t->id_teknisi; ?></td>
                                         <td><?php echo $t->nama_teknisi; ?></td>
                                         <td><?php echo $t->alamat_teknisi; ?></td>
+                                        <td><?php echo $t->kota_lokasi; ?></td>
                                         <td><?php echo $t->no_telp_teknisi; ?></td>
                                         <td><?php echo $t->jenis_kelamin_teknisi; ?></td>
-                                        <td><?php echo $t->nama_kota . ', ' . date('d-m-Y', strtotime($t->tanggal_lahir_teknisi)); ?></td>
+                                        <td><?php echo $t->kota_lahir . ', ' . date('d-m-Y', strtotime($t->tanggal_lahir_teknisi)); ?></td>
                                         <td><?php echo $t->agama_teknisi; ?></td>
                                         <td><?php echo $t->email_teknisi ?></td>
                                         <td><?php echo $t->status=="Y"?"Aktif":"Non-Aktiv"; ?></td>
@@ -193,9 +207,10 @@
                 $("#id").val(teknisi.id_teknisi);
                 $("#nama").val(teknisi.nama_teknisi);
                 $("#alamat").val(teknisi.alamat_teknisi);
+                $("#tmp_lokasi").val(teknisi.id_kota_lokasi);
                 $("#telp").val(teknisi.no_telp_teknisi);
                 $("#jk").val(teknisi.jenis_kelamin_teknisi);
-                $("#tmp_lahir").val(teknisi.id_kota);
+                $("#tmp_lahir").val(teknisi.id_kota_lahir);
                 $("#tgl_lahir").val(teknisi.tanggal_lahir_teknisi);
                 $("#agama").val(teknisi.agama_teknisi);
                 $("#email").val(teknisi.email_teknisi);
