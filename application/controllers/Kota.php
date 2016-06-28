@@ -40,6 +40,7 @@ class Kota extends CI_Controller {
         $check_prov = $this->tbl_provinsi->get_where(array('lower(nama_provinsi)' => strtolower($nama_provinsi)));
         if(count($check_prov) > 0) {
             $id_provinsi = $check_prov[0]->id_provinsi;
+            $this->tbl_kota->activate_by_provinsi($id_provinsi);
             $act = $this->tbl_provinsi->edit($id_provinsi, $nama_provinsi, $status);
         } else {
             $act = $this->tbl_provinsi->add($id_provinsi, $nama_provinsi, $status);

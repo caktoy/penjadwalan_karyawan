@@ -72,6 +72,12 @@ class M_Kota extends CI_Model {
         return $this->db->update('kota', array('status' => 'Y'));
     }
 
+    public function activate_by_provinsi($id)
+    {
+        $this->db->where('id_provinsi', $id);
+        return $this->db->update('public.kota', array('status' => 'Y'));
+    }
+
     public function genId()
     {
         $this->db->select("max(right(id_kota, 3)) as id");
