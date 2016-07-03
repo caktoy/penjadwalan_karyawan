@@ -25,7 +25,14 @@ class M_Jadwal extends CI_Model {
     }
     
     public function get_where(array $cond) {
-        return $this->db->get_where('jadwal', $cond)->result();
+        $this->db->distinct();
+        $this->db->select("jadwal.*, teknisi.nama_teknisi, site.nama_site");
+        $this->db->from("jadwal");
+        $this->db->join("teknisi", "jadwal.id_teknisi = teknisi.id_teknisi");
+        $this->db->join("site", "jadwal.id_site = site.id_site");
+        $this->db->where($cond);
+        $this->db->order_by("tanggal, id_site", "asc");
+        return $this->db->get()->result();
     }
 
     public function get_presensi($awal, $akhir)
@@ -96,6 +103,14 @@ class M_Jadwal extends CI_Model {
             'id_teknisi' => $teknisi,
             'id_site' => $site,
             'tanggal' => $tanggal
+        ));
+        return $this->db->delete('public.jadwal');
+    }
+
+    public function remove_tahun($tahun)
+    {
+        $this->db->where(array(
+            'extract(year from tanggal) =' => $tahun
         ));
         return $this->db->delete('public.jadwal');
     }

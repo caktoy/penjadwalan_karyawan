@@ -38,6 +38,7 @@ class M_Site extends CI_Model {
         $this->db->from("site");
         $this->db->join("kota", "site.id_kota = kota.id_kota", "left");
         $this->db->where($cond);
+        $this->db->order_by("site.id_site", "asc");
         return $this->db->get()->result();
     }
 

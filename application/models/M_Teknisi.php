@@ -71,6 +71,7 @@ class M_Teknisi extends CI_Model {
         $this->db->join("kota as kota_lokasi", "teknisi.id_kota_lokasi = kota_lokasi.id_kota", "left");
         $this->db->join("kota as kota_lahir", "teknisi.id_kota_lahir = kota_lahir.id_kota", "left");
         $this->db->where($cond);
+        $this->db->order_by("teknisi.id_teknisi", "asc");
         return $this->db->get()->result();
     }
 

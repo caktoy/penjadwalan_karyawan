@@ -11,45 +11,91 @@
         <h3 class="header smaller lighter blue">Penjadwalan</h3>
         
         <div class="row">
-            <form class="form-horizontal" role="form" method="post" action="<?php echo base_url(); ?>penjadwalan/do">
-                    <div class="col-md-6">                        
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="tahun"> Tahun </label>
+            <form id="form-setting" class="form-horizontal" role="form" method="post" action="<?php echo base_url(); ?>penjadwalan/do">
+                <div class="col-md-6">                        
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="tahun"> Tahun </label>
 
-                            <div class="col-sm-9">
-                                <input class="form-control" id="tahun" name="tahun" type="number" min="<?php echo date('Y'); ?>" value="<?php echo $setting['tahun']; ?>" />
-                            </div>
-                        </div>
-                    
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="kerja"> Kerja per Periode (Minggu) </label>
-
-                            <div class="col-sm-9">
-                                <input type="number" id="kerja" name="kerja" class="col-xs-10 col-sm-5 form-control" min="0" max="100" value="<?php echo $setting['kerja']; ?>" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="libur"> Libur per Periode (Minggu) </label>
-
-                            <div class="col-sm-9">
-                                <input type="number" id="libur" name="libur" class="col-xs-10 col-sm-5 form-control" min="0" max="100" value="<?php echo $setting['libur']; ?>" />
-                            </div>
-                        </div>
-                    
-                        <div class="col-md-offset-3 col-md-9">
-                            <button class="btn btn-success" type="submit">
-                                <i class="ace-icon fa fa-play bigger-110"></i>
-                                Simpan & Jalankan
-                            </button>
-                            &nbsp; &nbsp; &nbsp;
-                            <button class="btn btn-danger" type="reset">
-                                <i class="ace-icon fa fa-undo bigger-110"></i>
-                                Reset
-                            </button>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="tahun" name="tahun" type="number" value="<?php echo $setting['tahun']; ?>" />
                         </div>
                     </div>
+                
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="kerja"> Kerja per Periode (Minggu) </label>
+
+                        <div class="col-sm-9">
+                            <input type="number" id="kerja" name="kerja" class="col-xs-10 col-sm-5 form-control" min="1" max="100" 
+                                value="<?php echo $setting['kerja']; ?>" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="libur"> Libur per Periode (Minggu) </label>
+
+                        <div class="col-sm-9">
+                            <input type="number" id="libur" name="libur" class="col-xs-10 col-sm-5 form-control" min="1" max="100" 
+                                value="<?php echo $setting['libur']; ?>" />
+                        </div>
+                    </div>
+                
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-success" type="submit">
+                            <i class="ace-icon fa fa-play bigger-110"></i>
+                            Simpan & Jalankan
+                        </button>
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn btn-danger" type="reset">
+                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                            Reset
+                        </button>
+                        <button class="btn btn-info pull-right" id="btn-lihat" type="button">
+                            <i class="ace-icon fa fa-eye bigger-110"></i>
+                            Lihat
+                        </button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function check_year(tahun) {
+        $.ajax({
+            url: "<?php echo base_url().'penjadwalan/check_year'; ?>",
+            type: "post",
+            data: {"tahun": tahun},
+            dataType: "html",
+            success: function(result) {
+                if(result > 0) {
+                    $("#btn-lihat").show();
+
+                    $("#form-setting").on("submit", function(){
+                        return confirm("Jadwal pada tahun " + tahun + " sudah pernah dilakukan proses penjadwalan." + 
+                            "\nJika Anda melanjutkan proses ini, data sebelumnya akan terhapus dan digantikan dengan data baru." + 
+                            "\n\nApakah Anda yakin akan melanjutkan proses ini?");
+                    });
+                } else {
+                    $("#btn-lihat").hide();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        var tahun = $("#tahun").val();
+        check_year(tahun);
+        $("#tahun").on("change", function() {
+            var tahun = $(this).val();
+            check_year(tahun);
+        });
+        $("#btn-lihat").on("click", function() {
+            var url = "<?php echo base_url().'penjadwalan/lihat_jadwal/'; ?>" + tahun;
+            window.location = url;
+        });
+    });
+</script>

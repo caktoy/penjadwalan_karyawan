@@ -19,6 +19,7 @@
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/fullcalendar.min.css" />
 
 		<!--[if lte IE 9]>
 			<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
@@ -147,32 +148,35 @@
 		  <script src="<?php echo base_url(); ?>assets/js/excanvas.min.js"></script>
 		<![endif]-->
 		<script src="<?php echo base_url().'assets/js/jquery-ui.custom.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/jquery.ui.touch-punch.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/jquery.easypiechart.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/jquery.sparkline.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/jquery.flot.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/jquery.flot.pie.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/jquery.flot.resize.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/chosen.jquery.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/fuelux.spinner.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/bootstrap-datepicker.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/bootstrap-timepicker.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/moment.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/daterangepicker.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/bootstrap-datetimepicker.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/bootstrap-colorpicker.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/jquery.knob.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/jquery.autosize.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/jquery.inputlimiter.1.3.1.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/jquery.maskedinput.min.js'; ?>"></script>
-                <script src="<?php echo base_url().'assets/js/bootstrap-tag.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/jquery.ui.touch-punch.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/jquery.easypiechart.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/jquery.sparkline.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/jquery.flot.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/jquery.flot.pie.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/jquery.flot.resize.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/chosen.jquery.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/fuelux.spinner.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/bootstrap-datepicker.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/bootstrap-timepicker.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/moment.min.js'; ?>"></script>
+		<script src="<?php echo base_url().'assets/js/fullcalendar.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/daterangepicker.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/bootstrap-datetimepicker.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/bootstrap-colorpicker.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/jquery.knob.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/jquery.autosize.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/jquery.inputlimiter.1.3.1.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/jquery.maskedinput.min.js'; ?>"></script>
+        <script src="<?php echo base_url().'assets/js/bootstrap-tag.min.js'; ?>"></script>
 
 		<script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.min.js"></script>
 		<script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.bootstrap.min.js"></script>
 		<script src="<?php echo base_url(); ?>assets/js/dataTables.tableTools.min.js"></script>
 		<script src="<?php echo base_url(); ?>assets/js/dataTables.colVis.min.js"></script>
-                
-                <!-- ace scripts -->
+        
+		<script src="<?php echo base_url(); ?>assets/js/bootbox.min.js"></script>
+
+        <!-- ace scripts -->
 		<script src="<?php echo base_url(); ?>assets/js/ace-elements.min.js"></script>
 		<script src="<?php echo base_url(); ?>assets/js/ace.min.js"></script>
 
@@ -233,6 +237,6 @@
                     $(this).prev().focus();
                 });
             });
-		</script>
+		</script>		
 	</body>
 </html>
