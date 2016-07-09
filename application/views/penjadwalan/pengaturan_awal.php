@@ -17,7 +17,8 @@
                         <label class="col-sm-3 control-label no-padding-right" for="tahun"> Tahun </label>
 
                         <div class="col-sm-9">
-                            <input class="form-control" id="tahun" name="tahun" type="number" value="<?php echo $setting['tahun']; ?>" />
+                            <input class="form-control" id="tahun" name="tahun" type="number" value="<?php echo $setting['tahun']; ?>" 
+                                onchange="check_year(this.value)" required />
                         </div>
                     </div>
                 
@@ -62,40 +63,33 @@
 
 <script type="text/javascript">
     function check_year(tahun) {
-        $.ajax({
-            url: "<?php echo base_url().'penjadwalan/check_year'; ?>",
-            type: "post",
-            data: {"tahun": tahun},
-            dataType: "html",
-            success: function(result) {
-                if(result > 0) {
-                    $("#btn-lihat").show();
-
-                    $("#form-setting").on("submit", function(){
-                        return confirm("Jadwal pada tahun " + tahun + " sudah pernah dilakukan proses penjadwalan." + 
-                            "\nJika Anda melanjutkan proses ini, data sebelumnya akan terhapus dan digantikan dengan data baru." + 
-                            "\n\nApakah Anda yakin akan melanjutkan proses ini?");
-                    });
-                } else {
-                    $("#btn-lihat").hide();
-                }
-            },
-            error: function(xhr, status, error) {
-                console.log(error);
-            }
-        });
+        var url = '<?php echo base_url()."penjadwalan/check_year"; ?>';
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", url, false);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("tahun=" + tahun);
+        var resp = xhttp.responseText;
+        if(resp > 32)
+            $("#btn-lihat").show();
+        else
+            $("#btn-lihat").hide();
+        
+        var isVisible = $("#btn-lihat").is(":visible");
+        if(isVisible) {
+            $("#form-setting").on("submit", function(){
+                return confirm("Jadwal pada tahun " + tahun + " sudah pernah dilakukan proses penjadwalan." + 
+                    "\nJika Anda melanjutkan proses ini, data sebelumnya akan terhapus dan digantikan dengan data baru." + 
+                    "\n\nApakah Anda yakin akan melanjutkan proses ini?");
+            });
+        } else {
+            $("#form-setting").on("submit", function(){});
+        }
     }
 
     $(document).ready(function() {
-        var tahun = $("#tahun").val();
-        check_year(tahun);
-        $("#tahun").on("change", function() {
-            var tahun = $(this).val();
-            check_year(tahun);
-        });
         $("#btn-lihat").on("click", function() {
-            var url = "<?php echo base_url().'penjadwalan/lihat_jadwal/'; ?>" + tahun;
-            window.location = url;
+            var tahun = $("#tahun").val();
+            window.location = "<?php echo base_url().'penjadwalan/lihat_jadwal/'; ?>" + tahun;
         });
     });
 </script>

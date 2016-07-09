@@ -68,12 +68,64 @@ class Penjadwalan extends CI_Controller
 		$data['aktif'] 	= 'penjadwalan';
         $data['judul'] 	= 'Jadwal Tahun '.$tahun;
         $data['konten']	= 'penjadwalan/lihat_jadwal';
-        $data['menu'] 	= array("Penjadwalan", "Lihat ".$tahun);
+        $data['menu'] 	= array("Penjadwalan", "Lihat Jadwal", $tahun);
+        $data['tahun'] = $tahun;
         $data['jadwal']	= $this->tbl_jadwal->get_where(array(
 				'extract(year from tanggal) =' => $tahun
 			));
 
         $this->load->view('index', $data);
+	}
+
+	private function getFirstDateOfWeek($tahun, $week)
+	{
+		date_default_timezone_set('Asia/Jakarta');
+		$date = new DateTime();
+		$date->setISODate($tahun, $week);
+		return $date;
+	}
+
+	public function cetak_jadwal($tahun)
+	{
+        $data['judul'] = 'Jadwal Teknisi';
+        $data['subjudul'] = "Tahun: ".$tahun;
+        
+        $arr_tanggal = array();
+        for ($i=0; $i < 52; $i++) { 
+        	$tanggal = $this->getFirstDateOfWeek($tahun, $i);
+        	$arr_tanggal[$i] = $tanggal;
+        }
+
+        $sites = $this->tbl_jadwal->distinct_site($tahun);
+        $arr_jadwal = array();
+        foreach ($sites as $site) {
+        	$arr_site = array();
+        	$idx_col = 0;
+	        foreach ($arr_tanggal as $tanggal) {
+	        	$jadwal_tgl = $this->tbl_jadwal->get_where(array('jadwal.tanggal' => $tanggal->format('Y-m-d'), 'jadwal.id_site' => $site->id_site));
+	        	if(count($jadwal_tgl) > 0) {
+	        		$teknisi = "";
+	        		$idx_jdwl = 0;
+	        		foreach ($jadwal_tgl as $jdwl) {
+	        			$teknisi .= $jdwl->id_teknisi;
+	        			$idx_jdwl++;
+
+	        			if($idx_jdwl < count($jadwal_tgl))
+	        				$teknisi .= ", ";
+	        		}
+	        	} else {
+	        		$teknisi = null;
+	        	}
+	        	$arr_site[$idx_col] = $teknisi;
+	        	$idx_col++;
+	        }
+	        $arr_jadwal[$site->nama_site] = $arr_site;
+        }
+
+        $data['jadwal'] = $arr_jadwal;
+        $data['teknisi'] = $this->tbl_jadwal->distinct_teknisi($tahun);
+        
+        $this->pdfgenerator->generate('penjadwalan/jadwal_tahun', 'jadwal_tahun_'.$tahun, 'landscape', 'a3', $data);
 	}
 
 	private function getStartEndDate($week, $year)
@@ -214,6 +266,7 @@ class Penjadwalan extends CI_Controller
 						$arrtek = explode(",", $jadwal_row[$i]);
 						foreach ($arrtek as $tekn) {
 							$id_teknisi = $technicians[$tekn - 1]->id_teknisi;
+							$this->tbl_jadwal->remove($id_teknisi, $id_site, $date);
 							$this->tbl_jadwal->add($id_teknisi, $id_site, $date, null);
 						}
 					}

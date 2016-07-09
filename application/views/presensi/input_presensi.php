@@ -10,6 +10,16 @@
     <div class="col-md-12">
         <h3 class="header smaller lighter blue"><?php echo $judul; ?></h3>
         
+        <?php 
+        if(isset($_SESSION['last_date'])) {
+            $tahun = date('Y', strtotime($_SESSION['last_date']));
+            $bulan = date('m', strtotime($_SESSION['last_date']));
+        } else {
+            $tahun = date('Y');
+            $bulan = date('m');    
+        } 
+        ?>
+
         <form class="form-horizontal" role="form" method="post" action="#">
             <div class="col-md-12">                        
                 <div class="form-group">
@@ -17,18 +27,18 @@
 
                     <div class="col-sm-3">
                         <select class="form-control" id="bulan" name="bulan">
-                            <option value="01">Januari</option>
-                            <option value="02">Februari</option>
-                            <option value="03">Maret</option>
-                            <option value="04">April</option>
-                            <option value="05">Mei</option>
-                            <option value="06">Juni</option>
-                            <option value="07">Juli</option>
-                            <option value="08">Agustus</option>
-                            <option value="09">September</option>
-                            <option value="10">Oktober</option>
-                            <option value="11">November</option>
-                            <option value="12">Desember</option>
+                            <option value="01"<?php if($bulan=="01") echo " selected"; ?>>Januari</option>
+                            <option value="02"<?php if($bulan=="02") echo " selected"; ?>>Februari</option>
+                            <option value="03"<?php if($bulan=="03") echo " selected"; ?>>Maret</option>
+                            <option value="04"<?php if($bulan=="04") echo " selected"; ?>>April</option>
+                            <option value="05"<?php if($bulan=="05") echo " selected"; ?>>Mei</option>
+                            <option value="06"<?php if($bulan=="06") echo " selected"; ?>>Juni</option>
+                            <option value="07"<?php if($bulan=="07") echo " selected"; ?>>Juli</option>
+                            <option value="08"<?php if($bulan=="08") echo " selected"; ?>>Agustus</option>
+                            <option value="09"<?php if($bulan=="09") echo " selected"; ?>>September</option>
+                            <option value="10"<?php if($bulan=="10") echo " selected"; ?>>Oktober</option>
+                            <option value="11"<?php if($bulan=="11") echo " selected"; ?>>November</option>
+                            <option value="12"<?php if($bulan=="12") echo " selected"; ?>>Desember</option>
                         </select>
                     </div>
                 </div>
@@ -37,7 +47,7 @@
                     <label class="col-sm-1 control-label no-padding-right" for="tahun"> Tahun </label>
 
                     <div class="col-sm-3">
-                        <input type="number" id="tahun" name="tahun" class="col-xs-10 col-sm-5 form-control" min="<?php echo date('Y'); ?>" value="<?php echo date('Y'); ?>" />
+                        <input type="number" id="tahun" name="tahun" class="col-xs-10 col-sm-5 form-control" value="<?php echo $tahun; ?>" />
                     </div>
                 </div>
 
@@ -112,9 +122,7 @@
     }
 
     $(document).ready(function() {
-        $('#bulan').val('<?php echo date("m"); ?>');
-
-        var bulan = $(this).val();
+        var bulan = $('#bulan').val();
         var tahun = $('#tahun').val();
         var jumlahHari = numberOfDays(bulan, tahun);
         showDaysButton(jumlahHari);

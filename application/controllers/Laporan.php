@@ -47,7 +47,7 @@ class Laporan extends CI_Controller
 		        $tgl_akhir = date_create($akhir);
 		        $data['periode'] = date_diff($tgl_awal, $tgl_akhir);
 		        
-		        $this->pdfgenerator->generate('laporan/presensi_lihat', 'presensi_'.$awal.'_'.$akhir, 'portrait', $data);
+		        $this->pdfgenerator->generate('laporan/presensi_lihat', 'presensi_'.$awal.'_'.$akhir, 'portrait', 'a4', $data);
 				break;
 			
 			default:
@@ -76,6 +76,7 @@ class Laporan extends CI_Controller
 		        $data['konten'] = 'laporan/detil_presensi_lihat';
 		        $data['menu'] = array("Laporan", "Laporan Presensi");
 
+		        $data['teknisi'] = $this->tbl_teknisi->get_where(array('teknisi.status' => 'Y'));
 		        $data['sites'] = $this->tbl_site->get_where(array('site.status' => 'Y'));
 		        
 		        $begin = new DateTime($awal);
@@ -139,6 +140,7 @@ class Laporan extends CI_Controller
 		        $data['judul'] = 'Laporan Detil Presensi Teknisi';
 		        $data['subjudul'] = date('d M Y', strtotime($awal)).' - '.date('d M Y', strtotime($akhir));
 		        
+		        $data['teknisi'] = $this->tbl_teknisi->get_where(array('teknisi.status' => 'Y'));
 		        $data['sites'] = $this->tbl_site->get_where(array('site.status' => 'Y'));
 		        
 		        $begin = new DateTime($awal);
@@ -187,7 +189,7 @@ class Laporan extends CI_Controller
 
 		        $data['presensi'] = $arr_detil;
 		        
-		        $this->pdfgenerator->generate('laporan/detil_presensi_lihat', 'detil_presensi_'.$awal.'_'.$akhir, 'landscape', $data);
+		        $this->pdfgenerator->generate('laporan/detil_presensi_lihat', 'detil_presensi_'.$awal.'_'.$akhir, 'landscape', 'a4', $data);
 				break;
 			
 			default:

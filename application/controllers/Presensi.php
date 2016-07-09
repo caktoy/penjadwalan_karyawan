@@ -36,7 +36,6 @@ class Presensi extends CI_Controller
 		$teknisi = $this->input->post('teknisi');
 		$tanggal = $this->input->post('tanggal');
 
-		echo "tanggal: ".$tanggal."<br>";
 		$arr_teknisi = explode(";", $teknisi);
 		$act = 0;
 		foreach ($arr_teknisi as $t) {
@@ -49,6 +48,8 @@ class Presensi extends CI_Controller
 			$this->session->set_flashdata('pesan', '<b>Berhasil!</b> Data presensi telah disimpan.');
 		else 
 			$this->session->set_flashdata('pesan', '<b>Gagal!</b> Data presensi gagal disimpan.');
+
+		$this->session->set_flashdata('last_date', $tanggal);
 
 		redirect('presensi');
 	}

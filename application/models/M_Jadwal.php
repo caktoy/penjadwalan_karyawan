@@ -19,6 +19,28 @@ class M_Jadwal extends CI_Model {
     public function get_site($id) {
         return $this->db->get_where('jadwal', array('id_site' => $id))->result();
     }
+
+    public function distinct_site($tahun)
+    {
+        $this->db->distinct();
+        $this->db->select("jadwal.id_site, site.nama_site");
+        $this->db->from("jadwal");
+        $this->db->join("site", "jadwal.id_site = site.id_site");
+        $this->db->where('extract(year from tanggal) =', $tahun);
+        $this->db->order_by("jadwal.id_site", "asc");
+        return $this->db->get()->result();
+    }
+
+    public function distinct_teknisi($tahun)
+    {
+        $this->db->distinct();
+        $this->db->select("jadwal.id_teknisi, teknisi.nama_teknisi");
+        $this->db->from("jadwal");
+        $this->db->join("teknisi", "jadwal.id_teknisi = teknisi.id_teknisi");
+        $this->db->where('extract(year from tanggal) =', $tahun);
+        $this->db->order_by("jadwal.id_teknisi", "asc");
+        return $this->db->get()->result();
+    }
     
     public function get_tanggal($tanggal) {
         return $this->db->get_where('jadwal', array('tanggal' => $tanggal))->result();

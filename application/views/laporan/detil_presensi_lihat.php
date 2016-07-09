@@ -9,7 +9,7 @@
         <div class="pull-right tableTools-container"></div>
 </div>
 <div class="table-header">
-        <?php echo $judul; ?>
+    <?php echo $judul; ?>
 </div>
 <?php endif ?>
 
@@ -57,7 +57,7 @@
                     else if($val == 'C')
                         $tampil .= '<span class="label label-info">Cuti</span>';
                     else
-                        $tampil = $value;
+                        $tampil = null;
 
                     $idx_val++;
                     if($idx_val < count($arr_value)) {
@@ -88,6 +88,7 @@
         <?php endforeach ?>
     </tbody>
 </table>
+
 <?php if(!isset($cetak)): ?>
 <table border="0" width="100%" style="padding-top: 30px;">
     <tr>
@@ -105,11 +106,19 @@
 <p>Maaf, Tidak ada data yang ditampilkan.</p>
 <?php endif ?>
 
+<p style="font-style: italic;"> Keterangan:
+    <ul>
+    <?php foreach ($teknisi as $tek) : ?>
+        <li><?php echo $tek->id_teknisi; ?>: <?php echo $tek->nama_teknisi; ?></li>
+    <?php endforeach ?>
+    </ul>
+</p>
+
 <?php if(isset($cetak)): ?>
 <hr>
-<form method="post" target="_blank" action="<?php echo $cetak; ?>">
+<form method="post" action="<?php echo $cetak; ?>">
     <input type="hidden" name="awal" value="<?php echo $awal; ?>">
     <input type="hidden" name="akhir" value="<?php echo $akhir; ?>">
-    <button type="submit" class="btn btn-success"><i class="fa fa-print"></i> Cetak PDF</button>
+    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-print"></i> Cetak PDF</button>
 </form>
 <?php endif ?>

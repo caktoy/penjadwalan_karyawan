@@ -8,7 +8,12 @@
 <?php } ?>
 <div class="row">
     <div class="col-md-12">
-        <h3 class="header smaller lighter blue"><?php echo $judul; ?></h3>
+        <h3 class="header smaller lighter blue">
+            <?php echo $judul; ?>
+            <a href="<?php echo base_url().'penjadwalan/cetak_jadwal/'.$tahun; ?>" class="btn btn-sm btn-default pull-right">
+                <i class="ace-icon fa fa-print bigger-110"></i> PDF
+            </a>
+        </h3>
         
         <div class="row">
             <div class="space"></div>
