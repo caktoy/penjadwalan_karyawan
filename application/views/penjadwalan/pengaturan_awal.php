@@ -69,27 +69,26 @@
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("tahun=" + tahun);
         var resp = xhttp.responseText;
-        if(resp > 32)
+        if(resp > 0)
             $("#btn-lihat").show();
         else
             $("#btn-lihat").hide();
-        
-        var isVisible = $("#btn-lihat").is(":visible");
-        if(isVisible) {
-            $("#form-setting").on("submit", function(){
-                return confirm("Jadwal pada tahun " + tahun + " sudah pernah dilakukan proses penjadwalan." + 
-                    "\nJika Anda melanjutkan proses ini, data sebelumnya akan terhapus dan digantikan dengan data baru." + 
-                    "\n\nApakah Anda yakin akan melanjutkan proses ini?");
-            });
-        } else {
-            $("#form-setting").on("submit", function(){});
-        }
     }
 
     $(document).ready(function() {
+        check_year($("#tahun").val());
         $("#btn-lihat").on("click", function() {
             var tahun = $("#tahun").val();
             window.location = "<?php echo base_url().'penjadwalan/lihat_jadwal/'; ?>" + tahun;
+        });
+
+        $("#form-setting").submit(function(e) {
+            var isVisible = $("#btn-lihat").is(":visible");
+            if(isVisible) {
+                return confirm("Jadwal pada tahun " + tahun + " sudah pernah dilakukan proses penjadwalan." + 
+                    "\nJika Anda melanjutkan proses ini, data sebelumnya akan terhapus dan digantikan dengan data baru." + 
+                    "\n\nApakah Anda yakin akan melanjutkan proses ini?");
+            }
         });
     });
 </script>

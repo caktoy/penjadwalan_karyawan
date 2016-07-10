@@ -9,8 +9,11 @@
 <div class="row">
     <div class="col-md-12">
         <h3 class="header smaller lighter blue">
+            <button type="button" class="btn btn-lg btn-white btn-primary" onclick="javascript:history.go(-1);">
+                <i class="ace-icon fa fa-chevron-left bigger-110"></i>
+            </button>
             <?php echo $judul; ?>
-            <a href="<?php echo base_url().'penjadwalan/cetak_jadwal/'.$tahun; ?>" class="btn btn-sm btn-default pull-right">
+            <a href="<?php echo base_url().'penjadwalan/cetak_jadwal/'.$tahun; ?>" class="btn btn-lg btn-white btn-primary pull-right">
                 <i class="ace-icon fa fa-print bigger-110"></i> PDF
             </a>
         </h3>

@@ -57,7 +57,9 @@ class Penjadwalan extends CI_Controller
 	{
 		$tahun = $this->input->post('tahun');
 		$jadwal = $this->tbl_jadwal->get_where(array(
-				'extract(year from tanggal) =' => $tahun
+				'extract(year from tanggal) =' => $tahun,
+				'extract(month from tanggal) >=' => 1,
+				'extract(month from tanggal) <=' => 10
 			));
 		
         echo count($jadwal);
