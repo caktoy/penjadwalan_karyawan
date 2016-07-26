@@ -203,5 +203,135 @@ class Laporan extends CI_Controller
 				break;
 		}
 	}
+
+	private function getFirstDateOfWeek($tahun, $week)
+	{
+		date_default_timezone_set('Asia/Jakarta');
+		$date = new DateTime();
+		$date->setISODate($tahun, $week);
+		return $date;
+	}
+
+	public function teknisi($act = null)
+	{
+		switch ($act) {
+			case 'lihat':
+				# menampilkan preview laporan
+				$tahun = $this->input->post('tahun');
+				$id_teknisi = $this->input->post('teknisi');
+				$teknisi = $this->tbl_teknisi->get_id($id_teknisi);
+
+				$data['aktif'] = 'laporan';
+		        $data['judul'] = 'Laporan Jadwal Teknisi';
+		        $data['subjudul'] = 'Tahun '.$tahun;
+		        $data['konten'] = 'laporan/teknisi_lihat';
+		        $data['menu'] = array("Laporan", "Laporan Jadwal Teknisi");
+		        $data['teknisi'] = $teknisi;
+		        $data['id_teknisi'] = $id_teknisi;
+		        $data['tahun'] = $tahun;
+
+		        $data['cetak'] = base_url().'laporan/teknisi/cetak';
+
+		        $arr_tanggal = array();
+		        for ($i=0; $i < 52; $i++) { 
+		        	$tanggal = $this->getFirstDateOfWeek($tahun, $i);
+		        	$arr_tanggal[$i] = $tanggal;
+		        }
+
+		        $sites = $this->tbl_jadwal->distinct_site($tahun);
+		        $arr_jadwal = array();
+		        foreach ($sites as $site) {
+		        	$arr_site = array();
+		        	$idx_col = 0;
+			        foreach ($arr_tanggal as $tanggal) {
+			        	$jadwal_tgl = $this->tbl_jadwal->get_where(array('jadwal.tanggal' => $tanggal->format('Y-m-d'), 
+			        		'jadwal.id_site' => $site->id_site));
+			        	if(count($jadwal_tgl) > 0) {
+			        		$teknisi = "";
+			        		$idx_jdwl = 0;
+			        		foreach ($jadwal_tgl as $jdwl) {
+			        			$teknisi .= $jdwl->id_teknisi;
+			        			$idx_jdwl++;
+
+			        			if($idx_jdwl < count($jadwal_tgl))
+			        				$teknisi .= ", ";
+			        		}
+			        	} else {
+			        		$teknisi = null;
+			        	}
+			        	$arr_site[$idx_col] = $teknisi;
+			        	$idx_col++;
+			        }
+			        $arr_jadwal[$site->nama_site] = $arr_site;
+		        }
+
+		        $data['jadwal'] = $arr_jadwal;
+
+		        $this->load->view('index', $data);
+				break;
+
+			case 'cetak':
+				# action untuk cetak jadi pdf
+				$tahun = $this->input->post('tahun');
+				$id_teknisi = $this->input->post('teknisi');
+				$teknisi = $this->tbl_teknisi->get_id($id_teknisi);
+
+		        $data['judul'] = 'Laporan Jadwal Teknisi';
+		        $data['subjudul'] = 'Tahun '.$tahun;
+		        $data['teknisi'] = $teknisi;
+		        $data['id_teknisi'] = $id_teknisi;
+		        $data['tahun'] = $tahun;
+		        
+		        $arr_tanggal = array();
+		        for ($i=0; $i < 52; $i++) { 
+		        	$tanggal = $this->getFirstDateOfWeek($tahun, $i);
+		        	$arr_tanggal[$i] = $tanggal;
+		        }
+
+		        $sites = $this->tbl_jadwal->distinct_site($tahun);
+		        $arr_jadwal = array();
+		        foreach ($sites as $site) {
+		        	$arr_site = array();
+		        	$idx_col = 0;
+			        foreach ($arr_tanggal as $tanggal) {
+			        	$jadwal_tgl = $this->tbl_jadwal->get_where(array('jadwal.tanggal' => $tanggal->format('Y-m-d'), 
+			        		'jadwal.id_site' => $site->id_site));
+			        	if(count($jadwal_tgl) > 0) {
+			        		$teknisi = "";
+			        		$idx_jdwl = 0;
+			        		foreach ($jadwal_tgl as $jdwl) {
+			        			$teknisi .= $jdwl->id_teknisi;
+			        			$idx_jdwl++;
+
+			        			if($idx_jdwl < count($jadwal_tgl))
+			        				$teknisi .= ", ";
+			        		}
+			        	} else {
+			        		$teknisi = null;
+			        	}
+			        	$arr_site[$idx_col] = $teknisi;
+			        	$idx_col++;
+			        }
+			        $arr_jadwal[$site->nama_site] = $arr_site;
+		        }
+
+		        $data['jadwal'] = $arr_jadwal;
+		        
+		        $this->pdfgenerator->generate('laporan/teknisi_lihat', 'jadwal_teknisi_'.$id_teknisi, 'landscape', 'a4', $data);
+				break;
+			
+			default:
+				# halaman utama laporan presensi
+				$data['aktif'] = 'laporan';
+		        $data['judul'] = 'Laporan Jadwal Teknisi';
+		        $data['konten'] = 'laporan/teknisi';
+		        $data['menu'] = array("Laporan", "Laporan Jadwal Teknisi");
+		        
+		        $data['teknisi'] = $this->tbl_teknisi->get_where(array('teknisi.status' => 'Y'));
+
+		        $this->load->view('index', $data);
+				break;
+		}
+	}
 }
 ?>

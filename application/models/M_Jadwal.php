@@ -137,6 +137,12 @@ class M_Jadwal extends CI_Model {
         return $this->db->delete('public.jadwal');
     }
 
+    public function remove_tanggal($date)
+    {
+        $this->db->where('tanggal', $date);
+        return $this->db->delete('public.jadwal');
+    }
+
     public function check_isi($tanggal)
     {
         return $this->db->get_where('public.jadwal', array(

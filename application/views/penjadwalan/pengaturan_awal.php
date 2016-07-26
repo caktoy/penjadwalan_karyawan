@@ -84,6 +84,7 @@
 
         $("#form-setting").submit(function(e) {
             var isVisible = $("#btn-lihat").is(":visible");
+            var tahun = $("#tahun").val();
             if(isVisible) {
                 return confirm("Jadwal pada tahun " + tahun + " sudah pernah dilakukan proses penjadwalan." + 
                     "\nJika Anda melanjutkan proses ini, data sebelumnya akan terhapus dan digantikan dengan data baru." + 

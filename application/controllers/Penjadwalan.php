@@ -184,9 +184,7 @@ class Penjadwalan extends CI_Controller
 					if($sudah_ada_baris == 1)
 						$j = $j * 2;
 					$sudah_ada_baris = 1;
-				} else {
-					$j = $j + 5;
-				}
+				} 
 
 				// masukkan hasil hitung proses ke array $row, dengan key:id_site dan value:hasil proses
 				$row[$i] = $j;
@@ -228,13 +226,13 @@ class Penjadwalan extends CI_Controller
 		$arr_jadwal = array();
 		for($row = 0; $row < count($sites); $row++) {
 			$arr_row = array();
-			$step = 8; 
+			$step = $kerja; 
 			$step_teknisi = 0;
 			$teknisi_terakhir = 0;
 			for ($col = 0; $col < $total_week; $col++) { 
 				$nilai = null;
 				if($col == $step) {
-					$step = $step + 8;
+					$step = $step + ($kerja + $libur);
 					$step_teknisi++;
 				}
 				if($step <= $total_week) {
@@ -247,14 +245,34 @@ class Penjadwalan extends CI_Controller
 			}
 			$arr_jadwal[$row] = $arr_row;
 		}
+
+		// 1 tahun = 52 minggu
+		// jumlah site
+		$jml_site = count($sites);
+		// kebutuhan
+		$kebutuhan = $jml_site * 52;
+		
+		// jumlah teknisi
+		$jml_teknisi = count($technicians);
+		// jumlah kerja
+		$jml_kerja = $kerja;
+		// jumlah libur
+		$jml_libur = $libur;
+		// perbandingan minggu per teknisi = jumlah minggu : jumlah_teknisi
+		$minggu_per_teknisi = floor(52 / $jml_teknisi);
+		// total round
+		$total_round = ($jml_kerja + $jml_libur) * $minggu_per_teknisi * $jml_teknisi;
+
+		// cek kebutuhan
 		$arr_jadwal_final = $this->jadwal->dictionaries(count($sites), count($technicians), $kerja, $libur);
-		if(count($arr_jadwal_final) != count($sites)) {
-			$this->session->set_flashdata('pesan', '<b>Gagal!</b> Proses penjadwalan gagal dilakukan. Pastikan jumlah site dan teknisi tersedia.');
+		if((count($arr_jadwal_final) != count($sites)) || ($total_round - ($jml_teknisi * $libur) < $kebutuhan)) {
+			$this->session->set_flashdata('pesan', '<b>Gagal!</b> Proses penjadwalan gagal dilakukan. Jumlah site dan teknisi tidak memenuhi kebutuhan.');
 			redirect("penjadwalan");
 		} else {
 			// header("Content-Type: application/json");
 			// echo json_encode($arr_jadwal_final);
 			$this->tbl_jadwal->remove_tahun($tahun);
+			$this->clearData($tahun);
 			$idx_site = 0; 
 			foreach ($arr_jadwal_final as $jadwal_row) {
 				for ($i=0; $i < count($jadwal_row); $i++) { 
@@ -277,6 +295,17 @@ class Penjadwalan extends CI_Controller
 			}
 
 			redirect("penjadwalan/lihat_jadwal/".$tahun);
+		}
+	}
+
+	public function clearData($tahun)
+	{
+		for ($i=0; $i < 52; $i++) { 
+			$start_end_date = $this->getStartEndDate($i, $tahun);
+			$arr_dates = $this->getDates($start_end_date['start'], $start_end_date['end']);
+			foreach ($arr_dates as $date) {
+				$this->tbl_jadwal->remove_tanggal($date);
+			}
 		}
 	}
 }
